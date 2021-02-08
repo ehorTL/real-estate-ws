@@ -1,7 +1,8 @@
 {
+    "name": "vue-srcipts-author-name",
+    "version": "1.1.1",
     "private": true,
     "scripts": {
-        "name": "Vue srcipts author name",
         "dev": "npm run development",
         "development": "mix",
         "watch": "mix watch",
