@@ -1,6 +1,7 @@
 {
     "private": true,
     "scripts": {
+        "name": "Vue srcipts author name",
         "dev": "npm run development",
         "development": "mix",
         "watch": "mix watch",
