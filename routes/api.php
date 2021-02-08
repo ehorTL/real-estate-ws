@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\RealEstateCategoryController;
 use App\Http\Controllers\RealEstateController;
 use App\Http\Controllers\UserController;
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('hello', [Controller::class, 'foo']);
 
 Route::prefix('admin')->group(function () {
     Route::post('real-estate', [RealEstateController::class, 'create']);

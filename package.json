@@ -28,6 +28,10 @@
         "vue-template-compiler": "^2.6.10"
     },
     "engines": {
-        "node": "12.x"
+        "node": "12.x",
+        "npm": "6.x"
+    },
+    "dependencies": {
+        "vue-router": "^3.5.1"
     }
 }

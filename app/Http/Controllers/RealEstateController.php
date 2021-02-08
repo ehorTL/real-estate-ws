@@ -93,7 +93,7 @@ class RealEstateController extends Controller
         return $res_q->get();
     }
 
-    /**
+    /   **
      * some extra functions
      */
 
