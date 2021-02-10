@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRealEstatePhotoUrlsTable extends Migration
+class CreateContractTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateRealEstatePhotoUrlsTable extends Migration
      */
     public function up()
     {
-        Schema::create('real_estate_photo_urls', function (Blueprint $table) {
+        Schema::create('contract_types', function (Blueprint $table) {
             $table->id();
-
-            $table->string('url')->nullable();
-            $table->foreignId('real_estate_id');
-
-            $table->foreign('real_estate_id')->references('id')->on('real_estates');
+            $table->string('contract_name');
         });
     }
 
@@ -30,6 +26,6 @@ class CreateRealEstatePhotoUrlsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('real_estate_photo_urls');
+        Schema::dropIfExists('contract_types');
     }
 }

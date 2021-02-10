@@ -20,9 +20,9 @@ class RealEstate extends Model
         'agent',
         'mobile_number',
         'email',
-        // 'category',
+        'real_estate_category_id',
         'main_image_url',
-        'contract_type',
+        'contract_type_id',
         'has_commision',
     ];
 
@@ -42,5 +42,10 @@ class RealEstate extends Model
     {
         $value = intval($value * 1000) / 1000;
         $this->attributes['square'] = $value;
+    }
+
+    public function photo_urls()
+    {
+        return $this->hasMany(RealEstatePhotoUrl::class, 'real_estate_id', 'id');
     }
 }
