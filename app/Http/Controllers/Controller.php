@@ -13,6 +13,7 @@ class Controller extends BaseController
 
     public function foo()
     {
+        // return parse_url(env('DATABASE_URL'));
         return [
             'hello' => 'world'
         ];

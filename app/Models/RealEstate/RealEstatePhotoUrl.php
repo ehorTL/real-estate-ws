@@ -5,13 +5,15 @@ namespace App\Models\RealEstate;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RealEstateCategory extends Model
+class RealEstatePhotoUrl extends Model
 {
     use HasFactory;
 
+    protected $table = 'real_estate_photo_urls';
     public $timestamps = false;
 
     protected $fillable = [
-        'category_name',
+        'url',
+        'real_estate_id',
     ];
 }

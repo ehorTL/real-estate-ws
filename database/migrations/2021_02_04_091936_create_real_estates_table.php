@@ -29,9 +29,16 @@ class CreateRealEstatesTable extends Migration
             $table->string('agent');
             $table->string('mobile_number');
             $table->string('email');
-            // $table->foreign('real_estate_category_id')->references('id')->on('real_estate_categories');
-            $table->string('main_image_url');
-            $table->string('contract_type_id');
+
+            $table->foreignId('real_estate_category_id');
+            $table->foreign('real_estate_category_id')->references('id')->on('real_estate_categories');
+
+            // TODO: default image link needed?
+            $table->string('main_image_url')->nullable();
+
+            $table->foreignId('contract_type_id');
+            $table->foreign('contract_type_id')->references('id')->on('contract_types');
+
             $table->boolean('has_commision')->default(0);
         });
     }
