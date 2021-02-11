@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RealEstateCategorySeeder::class,
             ContractTypeSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }

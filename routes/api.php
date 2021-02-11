@@ -20,19 +20,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// TODO: remove
 Route::get('hello', [Controller::class, 'foo']);
 
-Route::prefix('admin')->group(function () {
-    Route::post('real-estate', [RealEstateController::class, 'create']);
-    Route::get('real-estate/{id}', [RealEstateController::class, 'show']);
-    // Route::put('real-estate/{id}', 'RealEstateController@update');
-    Route::delete('real-estate/{id}', [RealEstateController::class, 'delete']);
-    Route::get('real-estate-featured', [RealEstateController::class, 'getFeatured']);
+Route::prefix('common')->group(function () {
+    Route::post('login', [UserController::class, 'login']);
+    Route::post('logout', [UserController::class, 'logout']);
 
+    Route::get('real-estate/{id}', [RealEstateController::class, 'show']);
+    Route::get('real-estate-featured', [RealEstateController::class, 'getFeatured']);
     Route::get('real-estate-contract-types', [ContractTypeController::class, 'showAll']);
     Route::get('real-estate-categories', [RealEstateCategoryController::class, 'showAll']);
+});
 
-    Route::post('has-rights', [UserController::class, 'hasRights']);
+Route::middleware('auth_custom_token')->prefix('admin')->group(function () {
+    Route::post('real-estate', [RealEstateController::class, 'create']);
+    // Route::put('real-estate/{id}', 'RealEstateController@update');
+    Route::delete('real-estate/{id}', [RealEstateController::class, 'delete']);
 
     Route::post('set-rs-main-img', [RealEstateController::class, 'setMainPhoto']);
     Route::delete('delete-rs-main-img', [RealEstateController::class, 'deleteMainPhoto']);
