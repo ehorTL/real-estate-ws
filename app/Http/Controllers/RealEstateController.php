@@ -42,6 +42,8 @@ class RealEstateController extends Controller
 
     public function show(Request $request, $id)
     {
+        return RealEstateCategory::all();
+
         $re = RealEstate::find($id);
         if ($re) {
             $re['images'] = $re->photo_urls()->get();
