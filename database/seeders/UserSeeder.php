@@ -31,10 +31,11 @@ class UserSeeder extends Seeder
         ];
 
         foreach ($default_users as $user) {
-            User::create([
+            $user = new User([
                 'login' => $user['login'],
                 'password' => Hash::make($user['password'])
             ]);
+            $user->save();
         }
     }
 }

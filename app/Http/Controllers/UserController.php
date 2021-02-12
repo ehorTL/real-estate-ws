@@ -15,7 +15,7 @@ class UserController extends Controller
         $data = $request->all();
         $user = User::where('login', $data['login'])->first();
         if ($user) {
-            if (Hash::make($data['password']) === $user->password) {
+            if (Hash::check($data['password'], $user->password)) {
                 $user->token = Str::random(60);
                 $user->save();
 
