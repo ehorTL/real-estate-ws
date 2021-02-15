@@ -20,9 +20,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// TODO: remove
-Route::get('hello', [Controller::class, 'foo']);
-
 Route::prefix('common')->group(function () {
     Route::post('login', [UserController::class, 'login']);
     Route::post('logout', [UserController::class, 'logout']);
@@ -35,15 +32,11 @@ Route::prefix('common')->group(function () {
 
 Route::middleware('auth_custom_token')->prefix('admin')->group(function () {
     Route::post('real-estate', [RealEstateController::class, 'create']);
-    // Route::put('real-estate/{id}', 'RealEstateController@update');
+    Route::put('real-estate/{id}', 'RealEstateController@');
     Route::delete('real-estate/{id}', [RealEstateController::class, 'delete']);
 
     Route::post('set-rs-main-img', [RealEstateController::class, 'setMainPhoto']);
-    Route::delete('delete-rs-main-img', [RealEstateController::class, 'deleteMainPhoto']);
+    Route::delete('delete-rs-main-img/{real_estate_id}', [RealEstateController::class, 'deleteMainPhoto']);
     Route::post('upload-rs-img', [RealEstateController::class, 'uploadImage']);
     Route::delete('delete-rs-img/{real_estate_photo_id}', [RealEstateController::class, 'deleteImage']);
 });
-
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\RealEstate\RealEstate;
 use App\Models\RealEstate\RealEstateCategory;
 use App\Models\RealEstate\RealEstatePhotoUrl;
+use App\Services\FileUploaderHelper;
 use App\Services\QueryHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,15 +36,36 @@ class RealEstateController extends Controller
         return $re;
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        //
+        $re = RealEstate::find(intval($id));
+        if (!$re) {
+            return response('Resource not found', 404);
+        }
+
+        $data = $request->all();
+
+        $re->title = $data['title'];
+        $re->description =  $data['description'];
+        $re->price = $data['price '];
+        $re->price_per_square_meter = $data['price_per_square_meter'];
+        $re->square = $data['square '];
+        $re->address = $data['address'];
+        $re->inner_id = $data['inner_id '];
+        $re->agent = $data['agent'];
+        $re->mobile_number = $data['mobile_number'];
+        $re->email = $data['email'];
+        $re->real_estate_category_id = $data['real_estate_category_id '];
+        $re->contract_type_id = $data['contract_type_id'];
+        $re->has_commision = $data['has_commision'];
+
+        $re->save();
+
+        return $re;
     }
 
     public function show(Request $request, $id)
     {
-        return RealEstateCategory::all();
-
         $re = RealEstate::find($id);
         if ($re) {
             $re['images'] = $re->photo_urls()->get();
@@ -55,7 +77,20 @@ class RealEstateController extends Controller
 
     public function delete(Request $request, $id)
     {
-        //
+        $re = RealEstate::find($id);
+        if (!$re) {
+            return response('Resource does not exist', 200);
+        }
+
+        $photo_urls = $re->photo_urls()->get();
+        foreach ($photo_urls as $photo_url) {
+            FileUploaderHelper::deleteRealEstatePhotoUrl($photo_url);
+        }
+
+        FileUploaderHelper::deleteMainPhoto($re);
+        $re->delete();
+
+        return response('Deleted', 200);
     }
 
     public function setMainPhoto(Request $request)
@@ -84,9 +119,10 @@ class RealEstateController extends Controller
         return response('Smth went wrong', 500);
     }
 
-    public function deleteMainPhoto(Request $request)
+    public function deleteMainPhoto(Request $request, $real_estate_id)
     {
-        $rsid = intval($request->input('real_estate_id'));
+        //$rsid = intval($request->input('real_estate_id'));
+        $rsid = intval($real_estate_id);
         $re = RealEstate::find($rsid);
 
         if (!$re) {
@@ -94,9 +130,7 @@ class RealEstateController extends Controller
         }
 
         if ($re->main_image_url) {
-            Storage::delete($re->main_image_url);
-            $re->main_image_url = null;
-            $re->save();
+            FileUploaderHelper::deleteMainPhoto($re);
         }
 
         return response('Deleted', 200);
@@ -170,6 +204,32 @@ class RealEstateController extends Controller
         }
 
         return response('Smth went wrong', 500);
+    }
+
+
+    public function uploadimages(Request $request)
+    {
+        // $rsid = intval($request->input('real_estate_id'));
+
+        // if ($request->isMethod('post')) {
+        //     if ($request->hasFile('img')) {
+        //         $file = $request->file('img');
+        //         if (!$file->isValid()) {
+        //             return response('Bad request', 400);
+        //         } else {
+        //             $path = $file->store('img/real-estates');
+        //             $rs_photo = new RealEstatePhotoUrl([
+        //                 'url' => $path,
+        //                 'real_estate_id' => $rsid,
+        //             ]);
+        //             $rs_photo->save();
+
+        //             return $rs_photo;
+        //         }
+        //     }
+        // }
+
+        // return response('Smth went wrong', 500);
     }
 
     public function deleteImage(Request $request, $real_estate_photo_id)
