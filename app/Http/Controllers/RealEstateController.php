@@ -168,6 +168,10 @@ class RealEstateController extends Controller
                 $has_cm = QueryHelper::stringToBool($request->query('cm'));
                 $res_q->where('has_commision', $has_cm);
             }
+            if ($request->exists('ids')) {
+                $ids = $request->query('ids');
+                $res_q->whereIn('id', $ids);
+            }
         }
 
         $per_page = 10;
