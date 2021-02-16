@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\RealEstate\RealEstate;
 use App\Models\RealEstate\RealEstateCategory;
 use App\Models\RealEstate\RealEstatePhotoUrl;
+use App\Models\User;
 use App\Services\FileUploaderHelper;
 use App\Services\QueryHelper;
 use Illuminate\Http\Request;
@@ -15,6 +16,8 @@ class RealEstateController extends Controller
 {
     public function create(Request $request)
     {
+        $user_id = User::where('token', $request->bearerToken())->first()->id;
+
         $data = $request->all();
         $re = new RealEstate([
             'title' => $data['title'],
@@ -30,6 +33,12 @@ class RealEstateController extends Controller
             'real_estate_category_id' => $data['real_estate_category_id'],
             'contract_type_id' => $data['contract_type_id'],
             'has_commision' => $data['has_commision'],
+
+            'realized' => $data['realized'] ?? false,
+            'currency_id' => $data['currency_id'] ?? null,
+
+            'modified_by_user_id' => $user_id,
+            'created_by_user_id' => $user_id,
         ]);
         $re->save();
 
@@ -58,6 +67,11 @@ class RealEstateController extends Controller
         $re->real_estate_category_id = $data['real_estate_category_id '];
         $re->contract_type_id = $data['contract_type_id'];
         $re->has_commision = $data['has_commision'];
+
+        $user_id = User::where('token', $request->bearerToken())->first()->id;
+        $re->modified_by_user_id = $user_id;
+        $re->realized = $data['realized'] ?? false;
+        $re->currency_id = $data['currency_id'] ?? null;
 
         $re->save();
 

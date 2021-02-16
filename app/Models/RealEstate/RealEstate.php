@@ -26,6 +26,10 @@ class RealEstate extends Model
         'has_commision',
     ];
 
+    public function currency()
+    {
+    }
+
     public function setPriceAttributeAttribute($value)
     {
         $value = intval($value * 100) / 100;
