@@ -15,7 +15,7 @@ class CurrencySeeder extends Seeder
     public function run()
     {
         $currency = [
-            'UDS', 'UAH'
+            'USD', 'UAH'
         ];
 
         foreach ($currency as $c) {

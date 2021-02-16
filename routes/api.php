@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ContractTypeController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\RealEstateCategoryController;
 use App\Http\Controllers\RealEstateController;
 use App\Http\Controllers\UserController;
@@ -28,6 +29,7 @@ Route::prefix('common')->group(function () {
     Route::get('real-estate-featured', [RealEstateController::class, 'getFeatured']);
     Route::get('real-estate-contract-types', [ContractTypeController::class, 'showAll']);
     Route::get('real-estate-categories', [RealEstateCategoryController::class, 'showAll']);
+    Route::get('real-estate-currency', [CurrencyController::class, 'showAll']);
 });
 
 Route::middleware('auth_custom_token')->prefix('admin')->group(function () {
