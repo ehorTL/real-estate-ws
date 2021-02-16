@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             RealEstateCategorySeeder::class,
             ContractTypeSeeder::class,
             UserSeeder::class,
+            CurrencySeeder::class
         ]);
     }
 }
