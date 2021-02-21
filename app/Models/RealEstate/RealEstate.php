@@ -24,6 +24,10 @@ class RealEstate extends Model
         'main_image_url',
         'contract_type_id',
         'has_commision',
+
+        'currency_id',
+        'created_by_user_id',
+        'modified_by_user_id',
     ];
 
     public function currency()
