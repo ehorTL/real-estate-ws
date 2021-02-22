@@ -227,27 +227,28 @@ class RealEstateController extends Controller
 
     public function uploadimages(Request $request)
     {
-        // $rsid = intval($request->input('real_estate_id'));
+        $rsid = intval($request->input('real_estate_id'));
+        $files = $request->file('images');
 
-        // if ($request->isMethod('post')) {
-        //     if ($request->hasFile('img')) {
-        //         $file = $request->file('img');
-        //         if (!$file->isValid()) {
-        //             return response('Bad request', 400);
-        //         } else {
-        //             $path = $file->store('img/real-estates');
-        //             $rs_photo = new RealEstatePhotoUrl([
-        //                 'url' => $path,
-        //                 'real_estate_id' => $rsid,
-        //             ]);
-        //             $rs_photo->save();
+        foreach ($files as $f) {
+            if (!$f->isValid()) {
+                return response('Bad request', 400);
+            }
+        }
 
-        //             return $rs_photo;
-        //         }
-        //     }
-        // }
+        // TODO: restrict the file size(<8MB) and extension(img, png, gif)
+        $photos = array();
+        foreach ($files as $f) {
+            $path = $f->store('img/real-estates');
+            $rs_photo = new RealEstatePhotoUrl([
+                'url' => $path,
+                'real_estate_id' => $rsid,
+            ]);
+            $rs_photo->save();
+            $photos[] = $rs_photo;
+        }
 
-        // return response('Smth went wrong', 500);
+        return $photos;
     }
 
     public function deleteImage(Request $request, $real_estate_photo_id)
