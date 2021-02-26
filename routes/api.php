@@ -34,7 +34,7 @@ Route::prefix('common')->group(function () {
 
 Route::middleware('auth_custom_token')->prefix('admin')->group(function () {
     Route::post('real-estate', [RealEstateController::class, 'create']);
-    Route::put('real-estate/{id}', 'RealEstateController@');
+    Route::put('real-estate/{id}', 'RealEstateController@update');
     Route::delete('real-estate/{id}', [RealEstateController::class, 'delete']);
 
     Route::post('set-rs-main-img', [RealEstateController::class, 'setMainPhoto']);
