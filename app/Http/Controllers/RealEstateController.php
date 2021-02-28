@@ -56,15 +56,15 @@ class RealEstateController extends Controller
 
         $re->title = $data['title'];
         $re->description =  $data['description'];
-        $re->price = $data['price '];
+        $re->price = $data['price'];
         $re->price_per_square_meter = $data['price_per_square_meter'];
-        $re->square = $data['square '];
+        $re->square = $data['square'];
         $re->address = $data['address'];
-        $re->inner_id = $data['inner_id '];
+        $re->inner_id = $data['inner_id'];
         $re->agent = $data['agent'];
         $re->mobile_number = $data['mobile_number'];
         $re->email = $data['email'];
-        $re->real_estate_category_id = $data['real_estate_category_id '];
+        $re->real_estate_category_id = $data['real_estate_category_id'];
         $re->contract_type_id = $data['contract_type_id'];
         $re->has_commision = $data['has_commision'];
 
