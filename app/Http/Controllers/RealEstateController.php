@@ -8,6 +8,8 @@ use App\Models\RealEstate\RealEstatePhotoUrl;
 use App\Models\User;
 use App\Services\FileUploaderHelper;
 use App\Services\QueryHelper;
+use App\Services\Watermarker;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -126,6 +128,8 @@ class RealEstateController extends Controller
                 }
                 $re->main_image_url = $file->store('img/real-estates');
                 $re->save();
+                Watermarker::addWatermarkAndSave(public_path('storage/') . $re->main_image_url);
+
                 return $re;
             }
         }
@@ -215,6 +219,7 @@ class RealEstateController extends Controller
                         'real_estate_id' => $rsid,
                     ]);
                     $rs_photo->save();
+                    Watermarker::addWatermarkAndSave(public_path('storage/') . $path);
 
                     return $rs_photo;
                 }
@@ -245,6 +250,8 @@ class RealEstateController extends Controller
                 'real_estate_id' => $rsid,
             ]);
             $rs_photo->save();
+            Watermarker::addWatermarkAndSave(public_path('storage/') . $path);
+
             $photos[] = $rs_photo;
         }
 
