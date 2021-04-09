@@ -190,6 +190,10 @@ class RealEstateController extends Controller
                 $ids = $request->query('ids');
                 $res_q->whereIn('id', $ids);
             }
+            if ($request->exists('rec_ids')) {
+                $category_ids = $request->query('rec_ids');
+                $res_q->whereIn('real_estate_category_id', $category_ids);
+            }
         }
 
         $per_page = 10;
