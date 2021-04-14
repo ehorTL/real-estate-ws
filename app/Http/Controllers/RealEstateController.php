@@ -38,6 +38,7 @@ class RealEstateController extends Controller
 
             'realized' => $data['realized'] ?? false,
             'currency_id' => $data['currency_id'] ?? null,
+            'show_in_slider' => $data['show_in_slider'] ?? false,
 
             'modified_by_user_id' => $user_id,
             'created_by_user_id' => $user_id,
@@ -74,6 +75,7 @@ class RealEstateController extends Controller
         $re->modified_by_user_id = $user_id;
         $re->realized = $data['realized'] ?? false;
         $re->currency_id = $data['currency_id'] ?? null;
+        $re->show_in_slider = $data['show_in_slider'] ?? false;
 
         $re->save();
 
@@ -197,6 +199,10 @@ class RealEstateController extends Controller
             if ($request->exists('realized')) {
                 $is_realized = QueryHelper::stringToBool($request->query('realized'));
                 $res_q->where('realized', $is_realized);
+            }
+            if ($request->exists('show_in_slider')) {
+                $showInSlider = QueryHelper::stringToBool($request->query('show_in_slider'));
+                $res_q->where('show_in_slider', $showInSlider);
             }
         }
 

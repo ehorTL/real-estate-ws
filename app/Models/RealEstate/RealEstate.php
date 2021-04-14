@@ -29,6 +29,7 @@ class RealEstate extends Model
         'currency_id',
         'created_by_user_id',
         'modified_by_user_id',
+        'show_in_slider'
     ];
 
     public function currency()
