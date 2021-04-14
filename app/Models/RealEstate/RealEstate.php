@@ -25,6 +25,7 @@ class RealEstate extends Model
         'contract_type_id',
         'has_commision',
 
+        'realized',
         'currency_id',
         'created_by_user_id',
         'modified_by_user_id',

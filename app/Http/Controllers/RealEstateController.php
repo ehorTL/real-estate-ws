@@ -194,6 +194,10 @@ class RealEstateController extends Controller
                 $category_ids = $request->query('rec_ids');
                 $res_q->whereIn('real_estate_category_id', $category_ids);
             }
+            if ($request->exists('realized')) {
+                $is_realized = QueryHelper::stringToBool($request->query('realized'));
+                $res_q->where('realized', $is_realized);
+            }
         }
 
         $per_page = 10;
