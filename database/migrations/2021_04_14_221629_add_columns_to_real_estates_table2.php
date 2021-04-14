@@ -13,7 +13,7 @@ class AddColumnsToRealEstatesTable2 extends Migration
      */
     public function up()
     {
-        Schema::table('real_estates_table2', function (Blueprint $table) {
+        Schema::table('real_estates', function (Blueprint $table) {
             $table->boolean('show_in_slider')->default(0);
         });
     }
@@ -25,7 +25,7 @@ class AddColumnsToRealEstatesTable2 extends Migration
      */
     public function down()
     {
-        Schema::table('real_estates_table2', function (Blueprint $table) {
+        Schema::table('real_estates', function (Blueprint $table) {
             $table->dropColumn("show_in_slider");
         });
     }
