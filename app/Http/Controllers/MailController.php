@@ -13,8 +13,8 @@ class MailController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'text' => 'required|max:500',
-            'subject' => 'required|max:250',
-            'email' => 'required|email',
+            'subject' => 'present|max:250',
+            'email' => 'present',
             'tel' => 'present',
         ]);
 
