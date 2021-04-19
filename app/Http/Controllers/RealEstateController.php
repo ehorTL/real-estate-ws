@@ -204,6 +204,17 @@ class RealEstateController extends Controller
                 $showInSlider = QueryHelper::stringToBool($request->query('show_in_slider'));
                 $res_q->where('show_in_slider', $showInSlider);
             }
+            if ($request->exists('sbcd_d')) {
+                $sort_by_creation_date_desc = QueryHelper::stringToBool($request->query('sbcd_d'));
+                if ($sort_by_creation_date_desc) {
+                    $res_q->orderByDesc('created_at');
+                } else {
+                    $res_q->orderBy('created_at');
+                }
+            } else {
+                // default sorting
+                $res_q->orderByDesc('created_at');
+            }
         }
 
         $per_page = 10;
