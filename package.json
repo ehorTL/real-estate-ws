@@ -39,6 +39,7 @@
         "cross-env": "^7.0.3",
         "jquery": "^3.2",
         "lodash": "^4.17.19",
+        "laravel-mix": "^6.0.6",
         "popper.js": "^1.12",
         "postcss": "^8.1.14",
         "resolve-url-loader": "^2.3.1",
