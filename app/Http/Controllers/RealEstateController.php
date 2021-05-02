@@ -13,6 +13,7 @@ use App\Services\Watermarker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class RealEstateController extends Controller
 {
@@ -45,7 +46,21 @@ class RealEstateController extends Controller
         ]);
         $re->save();
 
-        return $re;
+        if (!empty($data['real_estate_categories'])) {
+            foreach ($data['real_estate_categories'] as $category_id) {
+                try {
+                    DB::table('real_estate_real_estate_category')->insert([
+                        'real_estate_id' => $re->id,
+                        'real_estate_category_id' => intval($category_id)
+                    ]);
+                } catch (Throwable $t) {
+                    // do nothing
+                }
+            }
+        }
+        $re['real_estate_categories'] = $re->real_estate_categories()->get();
+
+        return response()->json($re);
     }
 
     public function update(Request $request, $id)
@@ -87,7 +102,7 @@ class RealEstateController extends Controller
         $re = RealEstate::find($id);
         if ($re) {
             $re['images'] = $re->photo_urls()->get();
-            $re['real_estate_categories'] = $re->real_estate_categories()->get();
+            // $re['real_estate_categories'] = $re->real_estate_categories()->get();
             return response()->json($re);
         } else {
             return response('Not found', 404);
@@ -232,6 +247,29 @@ class RealEstateController extends Controller
         return $res_q->paginate($per_page);
     }
 
+    public function setRealEstateCategories(Request $request)
+    {
+        $validated_data = $request->validate([
+            'real_estate_id' => 'required',
+            'real_estate_categories' => 'required|array'
+        ]);
+
+        DB::table('real_estate_real_estate_category')
+            ->where('real_estate_id', $validated_data['real_estate_id'])->delete();
+
+        DB::table('real_estate_real_estate_category')
+            ->insert(
+                (collect($validated_data['real_estate_categories'])->map(function ($cat_id) use ($validated_data) {
+                    return [
+                        'real_estate_id' => $validated_data['real_estate_id'],
+                        'real_estate_category_id' => $cat_id
+                    ];
+                }))
+                    ->toArray()
+            );
+
+        return response()->json(['status' => 'ok']);
+    }
 
     public function uploadImage(Request $request)
     {

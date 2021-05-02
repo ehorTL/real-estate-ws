@@ -32,6 +32,8 @@ class RealEstate extends Model
         'show_in_slider'
     ];
 
+    protected $with = ['real_estate_categories'];
+
     public function currency()
     {
     }

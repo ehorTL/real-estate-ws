@@ -33,12 +33,17 @@ Route::prefix('common')->group(function () {
     Route::get('real-estate-currency', [CurrencyController::class, 'showAll']);
 
     Route::post('send-feedback', [MailController::class, 'handleFeedbackForm']);
+
+    // remove from this section
+    // Route::post('set-real-estate-categories', [RealEstateController::class, 'setRealEstateCategories']);
 });
 
 Route::middleware('auth_custom_token')->prefix('admin')->group(function () {
     Route::post('real-estate', [RealEstateController::class, 'create']);
     Route::put('real-estate/{id}', [RealEstateController::class, 'update']);
     Route::delete('real-estate/{id}', [RealEstateController::class, 'delete']);
+
+    Route::post('set-real-estate-categories', [RealEstateController::class, 'setRealEstateCategories']);
 
     Route::post('set-rs-main-img', [RealEstateController::class, 'setMainPhoto']);
     Route::delete('delete-rs-main-img/{real_estate_id}', [RealEstateController::class, 'deleteMainPhoto']);
