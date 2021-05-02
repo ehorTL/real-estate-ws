@@ -87,6 +87,7 @@ class RealEstateController extends Controller
         $re = RealEstate::find($id);
         if ($re) {
             $re['images'] = $re->photo_urls()->get();
+            $re['real_estate_categories'] = $re->real_estate_categories()->get();
             return response()->json($re);
         } else {
             return response('Not found', 404);
@@ -192,6 +193,10 @@ class RealEstateController extends Controller
                 $ids = $request->query('ids');
                 $res_q->whereIn('id', $ids);
             }
+            // if ($request->exists('rec_ids')) {
+            //     $category_ids = $request->query('rec_ids');
+            //     $res_q->whereIn('real_estate_category_id', $category_ids);
+            // }
             if ($request->exists('rec_ids')) {
                 $category_ids = $request->query('rec_ids');
                 $res_q->whereIn('real_estate_category_id', $category_ids);

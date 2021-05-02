@@ -58,4 +58,14 @@ class RealEstate extends Model
     {
         return $this->hasMany(RealEstatePhotoUrl::class, 'real_estate_id', 'id');
     }
+
+    public function real_estate_categories()
+    {
+        return $this->belongsToMany(
+            RealEstateCategory::class,
+            'real_estate_real_estate_category',
+            'real_estate_id',
+            'real_estate_category_id'
+        );
+    }
 }
