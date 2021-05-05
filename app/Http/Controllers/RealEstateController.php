@@ -172,9 +172,22 @@ class RealEstateController extends Controller
         return response('Deleted', 200);
     }
 
+    /**
+     * > While filtering by category, the only first parameter is taken from array!
+     */
     public function getFeatured(Request $request)
     {
         $res_q = DB::table('real_estates')->select('*');
+
+        if ($request->exists('rec_ids')) {
+            $category_ids = $request->query('rec_ids');
+            $cat_id = $category_ids[0];
+
+            $res_q = DB::table('real_estates')
+                ->join('real_estate_real_estate_category', 'real_estates.id', 'real_estate_real_estate_category.real_estate_id')
+                ->select('*')
+                ->where('real_estate_real_estate_category.real_estate_category_id', $cat_id);
+        }
 
         if ($request->exists('reid')) {
             // $reid = $request->query('reid', '');
@@ -212,10 +225,6 @@ class RealEstateController extends Controller
             //     $category_ids = $request->query('rec_ids');
             //     $res_q->whereIn('real_estate_category_id', $category_ids);
             // }
-            if ($request->exists('rec_ids')) {
-                $category_ids = $request->query('rec_ids');
-                $res_q->whereIn('real_estate_category_id', $category_ids);
-            }
             if ($request->exists('realized')) {
                 $is_realized = QueryHelper::stringToBool($request->query('realized'));
                 $res_q->where('realized', $is_realized);
