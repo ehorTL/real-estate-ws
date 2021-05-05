@@ -185,7 +185,29 @@ class RealEstateController extends Controller
 
             $res_q = DB::table('real_estates')
                 ->join('real_estate_real_estate_category', 'real_estates.id', '=', 'real_estate_real_estate_category.real_estate_id')
-                ->select('*')
+                ->select(
+                    "real_estates.id as id",
+                    "real_estates.created_at as created_at",
+                    "real_estates.updated_at as updated_at",
+                    "real_estates.title as title",
+                    "real_estates.price as price",
+                    "real_estates.price_per_square_meter as price_per_square_meter",
+                    "square",
+                    "address",
+                    "agent",
+                    "mobile_number",
+                    "email",
+                    "real_estate_real_estate_category.real_estate_category_id as real_estate_category_id",
+                    "main_image_url",
+                    "contract_type_id",
+                    "has_commision",
+                    "created_by_user_id",
+                    "modified_by_user_id",
+                    "realized",
+                    "currency_id",
+                    "show_in_slider",
+                    "description",
+                )
                 ->where('real_estate_real_estate_category.real_estate_category_id', $cat_id);
         }
 
