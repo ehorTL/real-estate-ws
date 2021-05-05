@@ -16,7 +16,7 @@ class RealEstate extends Model
         'price_per_square_meter',
         'square',
         'address',
-        'inner_id',
+        // 'inner_id',
         'agent',
         'mobile_number',
         'email',

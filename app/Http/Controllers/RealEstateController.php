@@ -29,7 +29,7 @@ class RealEstateController extends Controller
             'price_per_square_meter' => $data['price_per_square_meter'],
             'square' => $data['square'],
             'address' => $data['address'],
-            'inner_id' => $data['inner_id'],
+            // 'inner_id' => $data['inner_id'],
             'agent' => $data['agent'],
             'mobile_number' => $data['mobile_number'],
             'email' => $data['email'],
@@ -78,7 +78,7 @@ class RealEstateController extends Controller
         $re->price_per_square_meter = $data['price_per_square_meter'];
         $re->square = $data['square'];
         $re->address = $data['address'];
-        $re->inner_id = $data['inner_id'];
+        // $re->inner_id = $data['inner_id'];
         $re->agent = $data['agent'];
         $re->mobile_number = $data['mobile_number'];
         $re->email = $data['email'];
@@ -177,8 +177,8 @@ class RealEstateController extends Controller
         $res_q = DB::table('real_estates')->select('*');
 
         if ($request->exists('reid')) {
-            $reid = $request->query('reid', '');
-            $res_q->where('inner_id', $reid);
+            // $reid = $request->query('reid', '');
+            // $res_q->where('inner_id', $reid);
         } else {
             if ($request->exists('p_from')) {
                 $p_from = floatval($request->query('p_from'));
@@ -227,13 +227,13 @@ class RealEstateController extends Controller
             if ($request->exists('sbcd_d')) {
                 $sort_by_creation_date_desc = QueryHelper::stringToBool($request->query('sbcd_d'));
                 if ($sort_by_creation_date_desc) {
-                    $res_q->orderByDesc('created_at');
+                    $res_q->orderByDesc('updated_at');
                 } else {
-                    $res_q->orderBy('created_at');
+                    $res_q->orderBy('updated_at');
                 }
             } else {
                 // default sorting
-                $res_q->orderByDesc('created_at');
+                $res_q->orderByDesc('updated_at');
             }
         }
 
