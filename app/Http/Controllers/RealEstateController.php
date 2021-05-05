@@ -184,7 +184,7 @@ class RealEstateController extends Controller
             $cat_id = $category_ids[0];
 
             $res_q = DB::table('real_estates')
-                ->join('real_estate_real_estate_category', 'real_estates.id', 'real_estate_real_estate_category.real_estate_id')
+                ->join('real_estate_real_estate_category', 'real_estates.id', '=', 'real_estate_real_estate_category.real_estate_id')
                 ->select('*')
                 ->where('real_estate_real_estate_category.real_estate_category_id', $cat_id);
         }
