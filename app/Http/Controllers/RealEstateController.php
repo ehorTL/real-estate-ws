@@ -92,6 +92,20 @@ class RealEstateController extends Controller
 
         $re->save();
 
+        if (!empty($data['real_estate_categories'])) {
+            foreach ($data['real_estate_categories'] as $category_id) {
+                try {
+                    DB::table('real_estate_real_estate_category')->insert([
+                        'real_estate_id' => $re->id,
+                        'real_estate_category_id' => intval($category_id)
+                    ]);
+                } catch (Throwable $t) {
+                    // do nothing
+                }
+            }
+        }
+        $re['real_estate_categories'] = $re->real_estate_categories()->get();
+
         return $re;
     }
 
