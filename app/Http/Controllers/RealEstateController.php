@@ -92,18 +92,22 @@ class RealEstateController extends Controller
 
         $re->save();
 
-        if (!empty($data['real_estate_categories'])) {
-            foreach ($data['real_estate_categories'] as $category_id) {
-                try {
-                    DB::table('real_estate_real_estate_category')->insert([
+        // custill
+        $categories = $data['real_estate_categories'];
+        DB::table('real_estate_real_estate_category')
+            ->where('real_estate_id', $re->id)->delete();
+
+        DB::table('real_estate_real_estate_category')
+            ->insert(
+                (collect($categories)->map(function ($cat_id) use ($re) {
+                    return [
                         'real_estate_id' => $re->id,
-                        'real_estate_category_id' => intval($category_id)
-                    ]);
-                } catch (Throwable $t) {
-                    // do nothing
-                }
-            }
-        }
+                        'real_estate_category_id' => $cat_id
+                    ];
+                }))
+                    ->toArray()
+            );
+
         $re['real_estate_categories'] = $re->real_estate_categories()->get();
 
         return $re;
