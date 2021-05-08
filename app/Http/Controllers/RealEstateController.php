@@ -38,6 +38,7 @@ class RealEstateController extends Controller
             'realized' => $data['realized'] ?? false,
             'currency_id' => $data['currency_id'] ?? null,
             'show_in_slider' => $data['show_in_slider'] ?? false,
+            'archieved' => $data['archieved'] ?? false,
 
             'modified_by_user_id' => $user_id,
             'created_by_user_id' => $user_id,
@@ -89,6 +90,7 @@ class RealEstateController extends Controller
         $re->realized = $data['realized'] ?? false;
         $re->currency_id = $data['currency_id'] ?? null;
         $re->show_in_slider = $data['show_in_slider'] ?? false;
+        $re->archieved = $data['archieved'] ?? false;
 
         $re->save();
 
@@ -223,6 +225,7 @@ class RealEstateController extends Controller
                     "currency_id",
                     "show_in_slider",
                     "description",
+                    "archieved",
                 )
                 ->where('real_estate_real_estate_category.real_estate_category_id', $cat_id);
         }
@@ -231,6 +234,10 @@ class RealEstateController extends Controller
             // $reid = $request->query('reid', '');
             // $res_q->where('inner_id', $reid);
         } else {
+            if ($request->exists('arc')) {
+                $archieved = QueryHelper::stringToBool($request->query('arc'));
+                $res_q->where('archieved', $archieved);
+            }
             if ($request->exists('p_from')) {
                 $p_from = floatval($request->query('p_from'));
                 $res_q->where('price', '>=', $p_from);

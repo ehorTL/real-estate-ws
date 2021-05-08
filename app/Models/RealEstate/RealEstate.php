@@ -20,7 +20,7 @@ class RealEstate extends Model
         'agent',
         'mobile_number',
         'email',
-        'real_estate_category_id',
+        // 'real_estate_category_id',
         'main_image_url',
         'contract_type_id',
         'has_commision',
@@ -29,7 +29,8 @@ class RealEstate extends Model
         'currency_id',
         'created_by_user_id',
         'modified_by_user_id',
-        'show_in_slider'
+        'show_in_slider',
+        'archieved'
     ];
 
     protected $with = ['real_estate_categories'];
