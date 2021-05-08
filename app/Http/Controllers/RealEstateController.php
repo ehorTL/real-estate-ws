@@ -29,11 +29,9 @@ class RealEstateController extends Controller
             'price_per_square_meter' => $data['price_per_square_meter'],
             'square' => $data['square'],
             'address' => $data['address'],
-            // 'inner_id' => $data['inner_id'],
             'agent' => $data['agent'],
             'mobile_number' => $data['mobile_number'],
             'email' => $data['email'],
-            'real_estate_category_id' => $data['real_estate_category_id'],
             'contract_type_id' => $data['contract_type_id'],
             'has_commision' => $data['has_commision'],
 
@@ -82,7 +80,7 @@ class RealEstateController extends Controller
         $re->agent = $data['agent'];
         $re->mobile_number = $data['mobile_number'];
         $re->email = $data['email'];
-        $re->real_estate_category_id = $data['real_estate_category_id'];
+        // $re->real_estate_category_id = $data['real_estate_category_id'];
         $re->contract_type_id = $data['contract_type_id'];
         $re->has_commision = $data['has_commision'];
 
