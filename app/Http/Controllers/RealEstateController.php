@@ -159,9 +159,7 @@ class RealEstateController extends Controller
             if (!$file->isValid()) {
                 return response('Bad request', 400);
             } else {
-                if ($re->main_image_url !== null) {
-                    Storage::delete($re->main_image_url);
-                }
+                FileUploaderHelper::deleteMainPhoto($re);
                 $re->main_image_url = $file->store('img/real-estates');
                 $re->save();
                 Watermarker::addWatermarkAndSave(public_path('storage/') . $re->main_image_url);

@@ -35,4 +35,13 @@ class FileUploaderHelper
             $obj->delete();
         }
     }
+
+    public static function deleteFile($fileUrl)
+    {
+        if ($fileUrl) {
+            if (Storage::exists($fileUrl)) {
+                Storage::delete($fileUrl);
+            }
+        }
+    }
 }
