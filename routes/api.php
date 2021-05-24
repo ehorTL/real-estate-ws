@@ -49,6 +49,8 @@ Route::middleware('auth_custom_token')->prefix('admin')->group(function () {
     Route::delete('delete-rs-main-img/{real_estate_id}', [RealEstateController::class, 'deleteMainPhoto']);
     Route::post('upload-rs-img', [RealEstateController::class, 'uploadImage']);
     Route::delete('delete-rs-img/{real_estate_photo_id}', [RealEstateController::class, 'deleteImage']);
+    Route::post('delete-rs-imgs', [RealEstateController::class, 'deleteImages']);
+
 
     Route::post('upload-rs-imgs', [RealEstateController::class, 'uploadimages']);
 });

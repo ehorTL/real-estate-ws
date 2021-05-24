@@ -353,7 +353,7 @@ class RealEstateController extends Controller
     public function uploadimages(Request $request)
     {
         $rsid = intval($request->input('real_estate_id'));
-        
+
         $files = $request->file('images');
 
         foreach ($files as $f) {
@@ -386,6 +386,28 @@ class RealEstateController extends Controller
             Storage::delete($re_photo->url);
         }
         return RealEstatePhotoUrl::destroy($real_estate_photo_id);
+    }
+
+    public function deleteImages(Request $request)
+    {
+        $data = $request->validate([
+            'img_ids' => 'required|array'
+        ]);
+        $img_ids = $data['img_ids'];
+
+        if (sizeof($img_ids) > 40) {
+            return response('To big array', 500);
+        }
+
+        foreach ($img_ids as $img_id) {
+            $re_photo = RealEstatePhotoUrl::find(intval($img_id));
+            if ($re_photo) {
+                Storage::delete($re_photo->url);
+            }
+            RealEstatePhotoUrl::destroy($re_photo->id);
+        }
+
+        return response('Deleted', 200);
     }
 
     public function setAdvVisibility($isVisible)
