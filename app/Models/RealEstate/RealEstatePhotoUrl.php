@@ -10,6 +10,7 @@ class RealEstatePhotoUrl extends Model
     use HasFactory;
 
     protected $table = 'real_estate_photo_urls';
+    public $timestamps = false;
 
 
     protected $fillable = [

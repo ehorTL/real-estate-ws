@@ -151,13 +151,13 @@ class RealEstateController extends Controller
         $re = RealEstate::find($rsid);
 
         if (!$re) {
-            return response('Smth went wrong', 500);
+            return response('Real estate not found', 404);
         }
 
         if ($request->hasFile('img')) {
             $file = $request->file('img');
             if (!$file->isValid()) {
-                return response('Bad request', 400);
+                return response('File not valid', 400);
             } else {
                 FileUploaderHelper::deleteMainPhoto($re);
                 $re->main_image_url = $file->store('img/real-estates');
@@ -168,7 +168,7 @@ class RealEstateController extends Controller
             }
         }
 
-        return response('Smth went wrong', 500);
+        return response('No file provided', 500);
     }
 
     public function deleteMainPhoto(Request $request, $real_estate_id)
@@ -353,11 +353,12 @@ class RealEstateController extends Controller
     public function uploadimages(Request $request)
     {
         $rsid = intval($request->input('real_estate_id'));
+        
         $files = $request->file('images');
 
         foreach ($files as $f) {
             if (!$f->isValid()) {
-                return response('Bad request', 400);
+                return response('Invalid files', 400);
             }
         }
 
