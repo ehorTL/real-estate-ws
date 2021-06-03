@@ -4,8 +4,10 @@ use Illuminate\Support\Str;
 
 
 $DATABASE_URL_PARSED = null;
-if (env('DATABASE_URL') !== null && env('DATABASE_URL') !== '') {
-    $DATABASE_URL_PARSED = parse_url(env('DATABASE_URL'));
+if (env('DB_CONNECTION') == "pgsql") {
+    if (env('DATABASE_URL') !== null && env('DATABASE_URL') !== '') {
+        $DATABASE_URL_PARSED = parse_url(env('DATABASE_URL'));
+    }
 }
 
 return [
