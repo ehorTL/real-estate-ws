@@ -33,9 +33,6 @@ Route::prefix('common')->group(function () {
     Route::get('real-estate-currency', [CurrencyController::class, 'showAll']);
 
     Route::post('send-feedback', [MailController::class, 'handleFeedbackForm']);
-
-    // remove from this section
-    // Route::post('set-real-estate-categories', [RealEstateController::class, 'setRealEstateCategories']);
 });
 
 Route::middleware('auth_custom_token')->prefix('admin')->group(function () {

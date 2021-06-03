@@ -15,4 +15,4 @@ yarn-error.log
 my-notes.txt
 api.txt
 
-public/dist
+# public/dist
