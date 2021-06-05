@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Str;
 
-
+// does not work
 $DATABASE_URL_PARSED = null;
-if (env('DB_CONNECTION') == "pgsql") {
+if (env('DB_CONNECTION') === "pgsql") {
     if (env('DATABASE_URL') !== null && env('DATABASE_URL') !== '') {
         $DATABASE_URL_PARSED = parse_url(env('DATABASE_URL'));
     }

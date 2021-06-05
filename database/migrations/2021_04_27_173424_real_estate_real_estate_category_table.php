@@ -25,7 +25,7 @@ class RealEstateRealEstateCategoryTable extends Migration
             $table->foreign('real_estate_category_id')->references('id')->on('real_estate_categories')
                 ->onDelete('cascade');
 
-            $table->unique(['real_estate_id', 'real_estate_category_id']);
+            $table->unique(['real_estate_id', 'real_estate_category_id'], 'rsrec_index');
         });
     }
 
