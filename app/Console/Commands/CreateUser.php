@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
 use Illuminate\Console\Command;
+use Hash;
 
 class CreateUser extends Command
 {
@@ -11,14 +13,14 @@ class CreateUser extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'user:create';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Creates new system user (admin)';
 
     /**
      * Create a new command instance.
@@ -37,6 +39,31 @@ class CreateUser extends Command
      */
     public function handle()
     {
+        $name = $this->ask('User name');
+        $email = $this->ask('Email');
+        $login = $this->ask('User LOGIN');
+        $password = $this->secret('Password');
+
+        $this->line('User will be created:');
+        $this->newLine();
+        $this->line('Name: ' . $name);
+        $this->newLine();
+        $this->line('LOGIN: ' . $login);
+        $this->newLine();
+        $this->line('Email: ' . $email);
+        $this->newLine();
+
+        if ($this->confirm('Create new user?')) {
+            $user = User::create([
+                'name' => $name,
+                'login' => $login,
+                'password' => Hash::make($password),
+                'email' => $email,
+            ]);
+        }
+
+        $this->info('User successfully created');
+
         return 0;
     }
 }
