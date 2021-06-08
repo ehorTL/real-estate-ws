@@ -83,7 +83,7 @@ class RealEstateController extends Controller
         $re->email = $data['email'];
         // $re->real_estate_category_id = $data['real_estate_category_id'];
         $re->contract_type_id = $data['contract_type_id'];
-        $re->has_commision = QueryHelper::stringToBool($data['has_commision']);
+        $re->has_commision = isset($data['has_commision']) ? QueryHelper::stringToBool($data['has_commision']) : false;
 
         $user_id = User::where('token', $request->bearerToken())->first()->id;
         $re->modified_by_user_id = $user_id;
