@@ -71,4 +71,8 @@ class RealEstate extends Model
             'real_estate_category_id'
         );
     }
+
+    public function setHasCommisionAttribute($value){
+        $this->has_commision = $value ? 1 : 0; 
+    }
 }

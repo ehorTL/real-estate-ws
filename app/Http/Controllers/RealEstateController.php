@@ -33,7 +33,7 @@ class RealEstateController extends Controller
             'mobile_number' => $data['mobile_number'],
             'email' => $data['email'],
             'contract_type_id' => $data['contract_type_id'],
-            'has_commision' => $data['has_commision'],
+            'has_commision' => isset($data['has_commision']) ? QueryHelper::stringToBool($data['has_commision']) : false,
 
             'realized' => isset($data['realized']) ? QueryHelper::stringToBool($data['realized']) : false,
             'currency_id' => $data['currency_id'] ?? null,
