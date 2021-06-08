@@ -6,7 +6,7 @@ module.exports = {
   transpileDependencies: ["vuetify"],
 
   devServer: {
-    proxy: "http://akm.net.ua/",
+    proxy: "https://akm.net.ua/",
   },
 
   outputDir: "../public",

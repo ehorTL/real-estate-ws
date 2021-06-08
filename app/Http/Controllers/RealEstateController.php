@@ -35,10 +35,10 @@ class RealEstateController extends Controller
             'contract_type_id' => $data['contract_type_id'],
             'has_commision' => $data['has_commision'],
 
-            'realized' => $data['realized'] ? QueryHelper::stringToBool($data['realized']) : false,
+            'realized' => isset($data['realized']) ? QueryHelper::stringToBool($data['realized']) : false,
             'currency_id' => $data['currency_id'] ?? null,
-            'show_in_slider' => $data['show_in_slider'] ? QueryHelper::stringToBool($data['show_in_slider']) : false,
-            'archieved' => $data['archieved'] ? QueryHelper::stringToBool($data['archieved']) : false,
+            'show_in_slider' => isset($data['show_in_slider']) ? QueryHelper::stringToBool($data['show_in_slider']) : false,
+            'archieved' => isset($data['archieved']) ? QueryHelper::stringToBool($data['archieved']) : false,
 
             'modified_by_user_id' => $user_id,
             'created_by_user_id' => $user_id,
@@ -87,10 +87,10 @@ class RealEstateController extends Controller
 
         $user_id = User::where('token', $request->bearerToken())->first()->id;
         $re->modified_by_user_id = $user_id;
-        $re->realized = $data['realized'] ? QueryHelper::stringToBool($data['realized']) : false;
+        $re->realized = isset($data['realized']) ? QueryHelper::stringToBool($data['realized']) : false;
         $re->currency_id = $data['currency_id'] ?? null;
-        $re->show_in_slider = $data['show_in_slider'] ? QueryHelper::stringToBool($data['show_in_slider']) : false;
-        $re->archieved = $data['archieved'] ? QueryHelper::stringToBool($data['archieved']) : false;
+        $re->show_in_slider = isset($data['show_in_slider']) ? QueryHelper::stringToBool($data['show_in_slider']) : false;
+        $re->archieved = isset($data['archieved']) ? QueryHelper::stringToBool($data['archieved']) : false;
 
         $re->save();
 
