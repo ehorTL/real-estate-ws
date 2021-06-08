@@ -1,0 +1,44 @@
+<template>
+  <property-template
+    title="Продажа офисов"
+    :objects="objects"
+    description="Имея большую базу данных офисных помещений и работая с большинством бизнес центров города Киева наши
+      сотрудники помогут вам подобрать офисное помещение соответсвующее вашим критериям поиска.
+      Владельцам офисных помещений мы поможем найти стабильных арендаторов."
+    :show-preloader="showPreloader"
+  />
+</template>
+
+<script>
+import PropertyTemplate from "../../components/PropertyTemplate";
+
+export default {
+  components: {
+    PropertyTemplate
+  },
+  metaInfo: {
+    title: "Продажа офисов"
+  },
+  data() {
+    return {
+      objects: [],
+      showPreloader: true
+    };
+  },
+  created() {
+    this.getObjects();
+  },
+  methods: {
+    getObjects() {
+      this.axios
+        .get(
+          "common/real-estate-featured?rec_ids[]=1&ct=1&realized=false&arc=false"
+        )
+        .then(res => {
+          this.objects = res.data.data;
+          this.showPreloader = false;
+        });
+    }
+  }
+};
+</script>
