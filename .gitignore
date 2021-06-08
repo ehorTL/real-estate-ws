@@ -12,6 +12,11 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 
+/public/js
+/public/css
+/public/img
+/public/favicon.ico
+
 my-notes.txt
 api.txt
 
