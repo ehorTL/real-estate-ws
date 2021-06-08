@@ -14,7 +14,7 @@ class AddColumnsToRealEstatesTable2 extends Migration
     public function up()
     {
         Schema::table('real_estates', function (Blueprint $table) {
-            $table->boolean('show_in_slider')->default(0);
+            $table->boolean('show_in_slider')->default(false);
         });
     }
 

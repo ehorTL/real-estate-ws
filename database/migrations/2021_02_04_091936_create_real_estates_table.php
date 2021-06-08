@@ -39,7 +39,7 @@ class CreateRealEstatesTable extends Migration
             $table->foreignId('contract_type_id');
             $table->foreign('contract_type_id')->references('id')->on('contract_types');
 
-            $table->boolean('has_commision')->default(0);
+            $table->boolean('has_commision')->default(false);
         });
     }
 
