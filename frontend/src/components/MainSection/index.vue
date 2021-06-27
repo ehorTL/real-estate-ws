@@ -71,10 +71,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .wrapper {
-  height: 969px;
-  min-height: 100vh;
+  height: calc(100vh - 64px);
   background-image: url("../../assets/bg-main.png");
   background-position: center;
   background-size: cover;
@@ -113,5 +112,13 @@ export default {
 }
 ::v-deep .v-dialog {
   box-shadow: none;
+}
+@media screen and (max-width: 960px) {
+  .wrapper {
+    height: calc(100vh - 56px);
+    background-image: url("../../assets/bg-main.png");
+    background-position: center;
+    background-size: cover;
+  }
 }
 </style>

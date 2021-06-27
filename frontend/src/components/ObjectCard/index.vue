@@ -7,7 +7,7 @@
         class="object-img"
         :src="`${imgUrl}/${object.main_image_url}`"
       />
-      <v-tooltip v-if="$route.path !== '/featured-objects'" bottom>
+      <v-tooltip v-if="$route.path !== '/izbrannye'" bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-btn class="star-btn" @click.stop="addToFavorite" icon>
             <v-icon class="star" v-bind="attrs" v-on="on">mdi-star</v-icon>
@@ -15,7 +15,7 @@
         </template>
         <span>Добавить в избранное</span>
       </v-tooltip>
-      <v-tooltip v-if="$route.path == '/featured-objects'" bottom>
+      <v-tooltip v-if="$route.path == '/izbrannye'" bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-btn class="star-btn" @click.stop="removeFromFavorite" icon>
             <v-icon class="star" v-bind="attrs" v-on="on"

@@ -9,10 +9,9 @@ import ArchivedObjects from "../components/Admin/ArchivedObjects";
 import AddNewObject from "../components/Admin/AddNewObject";
 import EditObject from "../components/Admin/EditObject";
 import ObjectDetails from "../views/ObjectDetails";
-import ActualObjects from "../views/ActualObjects"
+import ActualObjects from "../views/ActualObjects";
 import RealizedObjects from "../views/RealizedObjects";
 import RentOffices from "../views/RentOffices";
-import RentProperty from "../views/RentProperty";
 import RentShops from "../views/RentShops";
 import RentBuilds from "../views/RentBuilds";
 import RentRestaurants from "../views/RentRestaurants";
@@ -33,7 +32,7 @@ const routes = [
     component: MainPage
   },
   {
-    path: "/object-details/:id",
+    path: "/item/:id",
     name: "objectDetails",
     component: ObjectDetails
   },
@@ -43,22 +42,17 @@ const routes = [
     component: ActualObjects
   },
   {
-    path: "/realized-objects",
+    path: "/portfolio",
     name: "realizedObjects",
     component: RealizedObjects
   },
   {
-    path: "/rent-offices",
+    path: "/ofisy/arenda-ofisov",
     name: "rentOffices",
     component: RentOffices
   },
   {
-    path: "/rent-property",
-    name: "rentProperty",
-    component: RentProperty
-  },
-  {
-    path: "/rent-shops",
+    path: "/magaziny/arenda-magazinov",
     name: "rentShops",
     component: RentShops
   },
@@ -68,22 +62,22 @@ const routes = [
     component: RentBuilds
   },
   {
-    path: "/rent-restaurants",
+    path: "/restorany/arenda-restoranov",
     name: "rentRestaurants",
     component: RentRestaurants
   },
   {
-    path: "/sale-offices",
+    path: "/ofisy/prodazha-ofisov",
     name: "saleOffices",
     component: SaleOffices
   },
   {
-    path: "/sale-property",
+    path: "/dokhodnaya-nedvizhimost",
     name: "saleProperty",
     component: SaleProperty
   },
   {
-    path: "/sale-shops",
+    path: "/magaziny/prodazha-magazinov",
     name: "saleShops",
     component: SaleShops
   },
@@ -93,17 +87,17 @@ const routes = [
     component: SaleBuilds
   },
   {
-    path: "/sale-restaurants",
+    path: "/restorany/prodazha-restoranov",
     name: "saleRestaurants",
     component: SaleRestaurants
   },
   {
-    path: "/featured-objects",
+    path: "/izbrannye",
     name: "featuredObjects",
     component: FeaturedObjects
   },
   {
-    path: "/about",
+    path: "/o-kompanii",
     name: "about",
     component: About
   },

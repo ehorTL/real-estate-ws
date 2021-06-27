@@ -59,18 +59,18 @@
             </div>
           </v-menu>
           <v-btn
-            to="/realized-objects"
+            to="/portfolio"
             class="toolbar__item"
             text
             max-width="200"
           >
             Реализованные объекты
           </v-btn>
-          <v-btn to="/about" class="toolbar__item" text max-width="200">
+          <v-btn to="/o-kompanii" class="toolbar__item" text max-width="200">
             О компании
           </v-btn>
           <v-btn
-            to="/featured-objects"
+            to="/izbrannye"
             class="toolbar__item"
             text
             max-width="200"
@@ -146,18 +146,18 @@
               </div>
             </v-menu>
             <v-btn
-              to="/realized-objects"
+              to="/portfolio"
               class="toolbar__item"
               text
               max-width="200"
             >
               Реализованные объекты
             </v-btn>
-            <v-btn to="/about" class="toolbar__item" text max-width="200">
+            <v-btn to="/o-kompanii" class="toolbar__item" text max-width="200">
               О компании
             </v-btn>
             <v-btn
-              to="/featured-objects"
+              to="/izbrannye"
               class="toolbar__item"
               text
               max-width="200"
@@ -177,17 +177,17 @@ export default {
   data() {
     return {
       rentList: [
-        { link: "/rent-offices", title: "Офисы" },
-        { link: "/rent-shops", title: "Магазины" },
+        { link: "/ofisy/arenda-ofisov", title: "Офисы" },
+        { link: "/magaziny/arenda-magazinov", title: "Магазины" },
         { link: "/rent-builds", title: "Здания" },
-        { link: "/rent-restaurants", title: "Рестораны" }
+        { link: "/restorany/arenda-restoranov", title: "Рестораны" }
       ],
       items2: [
-        { link: "/sale-offices", title: "Офисы" },
-        { link: "/sale-property", title: "Доходная недвижимость" },
-        { link: "/sale-shops", title: "Магазины" },
+        { link: "/ofisy/prodazha-ofisov", title: "Офисы" },
+        { link: "/dokhodnaya-nedvizhimost", title: "Доходная недвижимость" },
+        { link: "/magaziny/prodazha-magazinov", title: "Магазины" },
         { link: "/sale-builds", title: "Здания" },
-        { link: "/sale-restaurants", title: "Рестораны" }
+        { link: "/restorany/prodazha-restoranov", title: "Рестораны" }
       ]
     };
   }

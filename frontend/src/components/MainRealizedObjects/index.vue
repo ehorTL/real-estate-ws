@@ -36,7 +36,7 @@
         color="white"
         :width="275"
         :height="60"
-        to="/realized-objects"
+        to="/portfolio"
       />
     </v-container>
   </div>

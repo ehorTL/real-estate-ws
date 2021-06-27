@@ -83,7 +83,7 @@
             <p class="description">
               Мы знаем как реализовать ваш объект по максимальной цене в
               кратчайшие сроки! Больше о нашей компании расскажет раздел
-              <router-link class="item-link" to="/realized-objects"
+              <router-link class="item-link" to="/portfolio"
                 >РЕАЛИЗОВАННЫЕ ОБЪЕКТЫ</router-link
               >, где представлена часть наших проектов.
             </p>

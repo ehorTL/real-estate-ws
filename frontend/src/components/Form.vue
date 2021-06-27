@@ -174,7 +174,9 @@
           v-model="mainImage"
         ></v-file-input>
 
-        <img v-if="mainImageUrl" class="image" :src="mainImageUrl" alt="" />
+        <div class="image-wrapper" v-if="mainImageUrl">
+          <img class="image" :src="mainImageUrl" />
+        </div>
 
         <v-file-input
           v-model="images"
@@ -190,13 +192,9 @@
         ></v-file-input>
 
         <div v-if="mainImages" class="images">
-          <img
-            class="image"
-            v-for="(image, i) in mainImages"
-            :key="i"
-            :src="image"
-            alt=""
-          />
+          <div class="image-wrapper" v-for="(image, i) in mainImages" :key="i">
+            <img class="image" :src="image" />
+          </div>
         </div>
 
         <v-btn
@@ -370,13 +368,16 @@ export default {
     max-width: 100%;
   }
 }
-.image {
-  width: 120px;
-  height: 140px;
-  display: block;
-  margin: 0 auto;
+.image-wrapper {
+  width: 170px;
+  height: 170px;
   margin-bottom: 20px;
-  margin-right: 15px;
+  margin-right: 20px;
+  overflow: hidden;
+}
+.image {
+  height: 100%;
+  width: auto;
 }
 .images {
   display: flex;

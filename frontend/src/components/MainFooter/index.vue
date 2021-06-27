@@ -92,15 +92,15 @@ export default {
       rentList: [
         {
           title: "Аренда офисов",
-          to: "/rent-offices"
+          to: "/ofisy/arenda-ofisov"
         },
         {
           title: "Аренда ресторанов",
-          to: "/rent-restaurants"
+          to: "/restorany/arenda-restoranov"
         },
         {
           title: "Аренда магазинов",
-          to: "/rent-shops"
+          to: "/magaziny/arenda-magazinov"
         },
         {
           title: "Аренда зданий",
@@ -110,15 +110,15 @@ export default {
       saleList: [
         {
           title: "Продажа офисов",
-          to: "/sale-offices"
+          to: "/ofisy/prodazha-ofisov"
         },
         {
           title: "Продажа ресторанов",
-          to: "/sale-restaurants"
+          to: "/restorany/prodazha-restoranov"
         },
         {
           title: "Продажа магазинов",
-          to: "/sale-shops"
+          to: "/magaziny/prodazha-magazinov"
         },
         {
           title: "Продажа зданий",
@@ -126,7 +126,7 @@ export default {
         },
         {
           title: "Доходная недвижемость",
-          to: "/sale-property"
+          to: "/dokhodnaya-nedvizhimost"
         }
       ]
     };

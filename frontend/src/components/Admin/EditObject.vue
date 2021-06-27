@@ -180,6 +180,7 @@
         <v-file-input
           v-if="showImageInput"
           v-model="mainImage"
+          :rules="mainRule"
           show-size
           accept="image/png, image/jpeg, image/bmp"
           prepend-icon="mdi-camera"
@@ -193,23 +194,18 @@
           @click:clear="clearMainImage"
         ></v-file-input>
 
-        <img
-          v-if="!showImageInput"
-          class="image"
-          :src="`${imgUrl}/${mainImage}`"
-          alt=""
-        />
+        <div class="image-wrapper" v-if="!showImageInput">
+          <img class="image" :src="`${imgUrl}/${mainImage}`" />
+        </div>
 
-        <img
-          v-if="mainImageUrl && showImageInput"
-          class="image"
-          :src="mainImageUrl"
-          alt=""
-        />
+        <div class="image-wrapper" v-if="mainImageUrl && showImageInput">
+          <img class="image" :src="mainImageUrl" />
+        </div>
 
         <v-file-input
           v-if="showImagesInput"
           v-model="images"
+          :rules="mainRule"
           show-size
           accept="image/png, image/jpeg, image/bmp"
           prepend-icon="mdi-camera"
@@ -223,23 +219,15 @@
         ></v-file-input>
 
         <div v-if="!showImagesInput" class="images">
-          <img
-            class="image"
-            v-for="(image, i) in images"
-            :key="i"
-            :src="`${imgUrl}/${image.url}`"
-            alt=""
-          />
+          <div class="image-wrapper" v-for="(image, i) in images" :key="i">
+            <img class="image" :src="`${imgUrl}/${image.url}`" />
+          </div>
         </div>
 
         <div v-if="mainImages && showImagesInput" class="images">
-          <img
-            class="image"
-            v-for="(image, i) in mainImages"
-            :key="i"
-            :src="image"
-            alt=""
-          />
+          <div class="image-wrapper" v-for="(image, i) in mainImages" :key="i">
+            <img class="image" :src="image" />
+          </div>
         </div>
 
         <div class="controls mt-5 d-flex justify-space-between">
@@ -286,8 +274,8 @@ export default {
       { type: "Аренда", value: 2 }
     ],
     commissionItems: [
-      { type: "С комиссией!", value: "true" },
-      { type: "Без комисси!", value: "false" }
+      { type: "С комиссией!", value: "false" },
+      { type: "Без комисси!", value: "true" }
     ],
     currencyItems: [
       { type: "USD", value: 1 },
@@ -373,13 +361,13 @@ export default {
           this.formData.currency = res.data.currency_id;
           this.formData.price = res.data.price;
           this.formData.deal = res.data.contract_type_id;
-          this.formData.commission = res.data.has_commision.toString();
+          this.formData.commission = res.data.has_commision;
           this.formData.agent = res.data.agent;
           this.formData.telephone = res.data.mobile_number;
           this.formData.email = res.data.email;
-          this.formData.isRealized = res.data.realized.toString();
-          this.formData.isSlider = res.data.show_in_slider.toString();
-          this.formData.archieved = res.data.archieved.toString();
+          this.formData.isRealized = res.data.realized;
+          this.formData.isSlider = res.data.show_in_slider;
+          this.formData.archieved = res.data.archieved;
           this.mainImage = res.data.main_image_url;
           this.images = res.data.images;
 
@@ -389,7 +377,7 @@ export default {
           if (!this.mainImage) {
             this.showImageInput = true;
           }
-
+          console.log(this.formData);
           this.showPreloader = false;
         })
         .catch(e => {
@@ -437,6 +425,7 @@ export default {
           }
         )
         .then(() => {
+          this.showImagesInput = true;
           this.images = [];
         });
     },
@@ -470,8 +459,16 @@ export default {
             }
           }
         );
-        await this.setMainImage();
-        await this.setImages();
+        if (this.mainImage && this.mainImage.type) {
+          await this.setMainImage();
+        }
+        if (
+          this.images.length > 0 &&
+          this.images.filter(el => el.id).length <= 0
+        ) {
+          await this.setImages();
+        }
+        await this.$router.push({ name: "allObjects" });
       }
     },
     async setMainImage() {
@@ -493,16 +490,12 @@ export default {
 
         data.append("images[]", image);
       }
-      await this.axios
-        .post("admin/upload-rs-imgs", data, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${this.token}`
-          }
-        })
-        .then(() => {
-          this.$router.push({ name: "allObjects" });
-        });
+      await this.axios.post("admin/upload-rs-imgs", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${this.token}`
+        }
+      });
     }
   }
 };
@@ -518,13 +511,17 @@ export default {
     max-width: 100%;
   }
 }
-.image {
-  width: 120px;
-  height: 140px;
-  display: block;
-  margin: 0 auto;
+.image-wrapper {
+  width: 170px;
+  height: 170px;
   margin-bottom: 20px;
-  margin-right: 15px;
+  margin-right: 20px;
+  overflow: hidden;
+}
+
+.image {
+  height: 100%;
+  width: auto;
 }
 .images {
   display: flex;

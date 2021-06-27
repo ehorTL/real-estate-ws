@@ -4,20 +4,20 @@
       title="Офисы"
       first-link-title="Аренда"
       second-link-title="Продажа"
-      first-link="/rent-offices"
-      second-link="/sale-offices"
+      first-link="/ofisy/arenda-ofisov"
+      second-link="/ofisy/prodazha-ofisov"
     />
     <Button
       title="Доходная недвижимость"
       second-link-title="Продажа"
-      second-link="/sale-property"
+      second-link="/dokhodnaya-nedvizhimost"
     />
     <Button
       title="Магазины"
       first-link-title="Аренда"
       second-link-title="Продажа"
-      first-link="/rent-shops"
-      second-link="/sale-shops"
+      first-link="/magaziny/arenda-magazinov"
+      second-link="/magaziny/prodazha-magazinov"
     />
     <Button
       title="Здания"
@@ -30,8 +30,8 @@
       title="Рестораны"
       first-link-title="Аренда"
       second-link-title="Продажа"
-      first-link="/rent-restaurants"
-      second-link="/sale-restaurants"
+      first-link="/restorany/arenda-restoranov"
+      second-link="/restorany/prodazha-restoranov"
     />
   </div>
 </template>
