@@ -122,10 +122,6 @@
 .item-link {
   color: white;
   text-decoration: none;
-  transition: all 0.3s linear;
-}
-.item-link:hover {
-  transition: all 0.3s linear;
   border-bottom: 1px dotted white;
 }
 </style>

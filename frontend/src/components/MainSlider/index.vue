@@ -129,22 +129,23 @@ export default {
       font-size: 10px;
       font-weight: bold;
       max-width: 140px;
-      word-break: break-all;
+      word-wrap: break-word;
       margin-bottom: 0;
       color: white;
     }
   }
   .swiper-slide-active {
-    height: 220px;
+    height: auto;
     opacity: 1;
     img {
       max-width: 210px;
+      object-fit: contain;
       margin-top: 0;
     }
     .text {
       font-size: 14px;
       max-width: 160px;
-      word-break: break-all;
+      word-wrap: break-word;
     }
   }
 }

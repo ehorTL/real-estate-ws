@@ -113,12 +113,9 @@ export default {
 ::v-deep .v-dialog {
   box-shadow: none;
 }
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 1265px) {
   .wrapper {
-    height: calc(100vh - 56px);
-    background-image: url("../../assets/bg-main.png");
-    background-position: center;
-    background-size: cover;
+    height: auto;
   }
 }
 </style>

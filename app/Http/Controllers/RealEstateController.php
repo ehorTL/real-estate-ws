@@ -6,6 +6,7 @@ use App\Models\RealEstate\RealEstate;
 use App\Models\RealEstate\RealEstateCategory;
 use App\Models\RealEstate\RealEstatePhotoUrl;
 use App\Models\User;
+use App\Services\EntityMapper;
 use App\Services\FileUploaderHelper;
 use App\Services\QueryHelper;
 use App\Services\Watermarker;
@@ -59,7 +60,8 @@ class RealEstateController extends Controller
         }
         $re['real_estate_categories'] = $re->real_estate_categories()->get();
 
-        return response()->json($re);
+        // return response()->json($re);
+        return response()->json(EntityMapper::mapBoolToInt($re));
     }
 
     public function update(Request $request, $id)
@@ -112,7 +114,8 @@ class RealEstateController extends Controller
 
         $re['real_estate_categories'] = $re->real_estate_categories()->get();
 
-        return $re;
+        // return $re;
+        return EntityMapper::mapBoolToInt($re);
     }
 
     public function show(Request $request, $id)
@@ -121,7 +124,8 @@ class RealEstateController extends Controller
         if ($re) {
             $re['images'] = $re->photo_urls()->get();
             // $re['real_estate_categories'] = $re->real_estate_categories()->get();
-            return response()->json($re);
+            // return response()->json($re);
+            return response()->json(EntityMapper::mapBoolToInt($re));
         } else {
             return response('Not found', 404);
         }
@@ -164,7 +168,8 @@ class RealEstateController extends Controller
                 $re->save();
                 Watermarker::addWatermarkAndSave(public_path('storage/') . $re->main_image_url);
 
-                return $re;
+                // return $re;
+                return EntityMapper::mapBoolToInt($re);
             }
         }
 
@@ -296,7 +301,11 @@ class RealEstateController extends Controller
             }
         }
 
-        return $res_q->paginate($per_page);
+        // return $res_q->paginate($per_page);
+        $paginator = $res_q->paginate($per_page);
+        $items = $paginator->items();
+        EntityMapper::mapBoolToIntArray($items);
+        return $paginator;
     }
 
     public function setRealEstateCategories(Request $request)

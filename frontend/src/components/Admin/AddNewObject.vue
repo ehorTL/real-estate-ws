@@ -1,6 +1,18 @@
 <template>
   <div>
     <Form @click="addNewObject" />
+    <v-dialog v-if="dialog" v-model="dialog" persistent width="300">
+      <v-card color="primary" dark>
+        <v-card-text>
+          Пожалуйста, подождите, загружаются фотографии
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mt-2"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -15,7 +27,8 @@ export default {
   },
   data() {
     return {
-      objectId: null
+      objectId: null,
+      dialog: false
     };
   },
   computed: {
@@ -25,6 +38,7 @@ export default {
   },
   methods: {
     async addNewObject(formData, pricePerMeter, mainImage, images) {
+      this.dialog = true;
       await this.axios
         .post(
           "admin/real-estate",
@@ -56,6 +70,8 @@ export default {
         });
       await this.setMainImage(mainImage);
       await this.setImages(images);
+      this.dialog = false;
+      await this.$router.push({ name: "allObjects" });
     },
     async setMainImage(mainImage) {
       let data = new FormData();
@@ -69,23 +85,21 @@ export default {
       });
     },
     async setImages(images) {
-      let data = new FormData();
-      data.append("real_estate_id", this.objectId);
-      for (var i = 0; i < images.length; i++) {
-        let image = images[i];
+      if (images) {
+        let data = new FormData();
+        data.append("real_estate_id", this.objectId);
+        for (var i = 0; i < images.length; i++) {
+          let image = images[i];
 
-        data.append("images[]", image);
-      }
-      await this.axios
-        .post("admin/upload-rs-imgs", data, {
+          data.append("images[]", image);
+        }
+        await this.axios.post("admin/upload-rs-imgs", data, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${this.token}`
           }
-        })
-        .then(() => {
-          this.$router.push({ name: "allObjects" });
         });
+      }
     }
   }
 };

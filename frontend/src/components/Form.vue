@@ -369,15 +369,17 @@ export default {
   }
 }
 .image-wrapper {
-  width: 170px;
-  height: 170px;
+  width: 200px;
+  height: 200px;
   margin-bottom: 20px;
   margin-right: 20px;
   overflow: hidden;
 }
 .image {
-  height: 100%;
-  width: auto;
+  display: block;
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
 }
 .images {
   display: flex;

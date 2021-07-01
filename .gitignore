@@ -20,5 +20,6 @@ yarn-error.log
 my-notes.txt
 api.txt
 /.vscode
+/.idea
 
 # public/dist

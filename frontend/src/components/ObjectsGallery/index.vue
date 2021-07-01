@@ -104,6 +104,7 @@ export default {
 .carousel-img {
   width: 100%;
   height: 100%;
+  object-fit: contain;
 }
 
 .swiper {

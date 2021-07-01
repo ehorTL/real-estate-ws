@@ -47,7 +47,7 @@
             </div>
           </v-col>
           <v-col cols="12" xl="4" lg="6" md="5" sm="12">
-            <ObjectsGallery :slides="objectImages()" />
+            <ObjectsGallery v-if="object" :slides="objectImages()" />
           </v-col>
         </v-row>
       </v-container>
