@@ -8,7 +8,7 @@ class QueryHelper
     {
         if (config('database.default') == 'mysql'){
             if ($str) {
-                if ($str === '1' || strtolower($str) === 'true') {
+                if ($str === '1' || strtolower($str) === 'true' || $str === 1) {
                     return 1;
                 }
             }
@@ -17,7 +17,7 @@ class QueryHelper
         }
         else {
             if ($str) {
-                if ($str === '1' || strtolower($str) === 'true') {
+                if ($str === '1' || strtolower($str) === 'true' || $str === 1) {
                     return true;
                 }
             }

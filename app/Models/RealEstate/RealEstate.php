@@ -72,7 +72,11 @@ class RealEstate extends Model
         );
     }
 
-    public function setHasCommisionAttribute($value){
-        $this->has_commision = $value ? 1 : 0; 
-    }
+    // public function setHasCommisionAttribute($value){
+    //     if (config('database.default') == 'pgsql'){
+    //         $this->attributes['has_commision'] = $value ? 1 : 0;    
+    //     } else {
+    //         $this->attributes['has_commision'] = $value ? true : false;
+    //     }        
+    // }
 }
