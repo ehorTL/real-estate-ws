@@ -16,5 +16,6 @@ class RealEstatePhotoUrl extends Model
     protected $fillable = [
         'url',
         'real_estate_id',
+        'img_number',
     ];
 }

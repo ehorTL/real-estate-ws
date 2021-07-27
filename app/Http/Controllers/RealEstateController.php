@@ -122,7 +122,10 @@ class RealEstateController extends Controller
     {
         $re = RealEstate::find($id);
         if ($re) {
-            $re['images'] = $re->photo_urls()->get();
+            $re['images'] = $re->photo_urls()
+                ->orderBy('img_number', 'asc')
+                ->get();
+
             // $re['real_estate_categories'] = $re->real_estate_categories()->get();
             // return response()->json($re);
             return response()->json(EntityMapper::mapBoolToInt($re));
@@ -373,11 +376,12 @@ class RealEstateController extends Controller
 
         // TODO: restrict the file size(<8MB) and extension(img, png, gif)
         $photos = array();
-        foreach ($files as $f) {
+        foreach ($files as $key => $f) {
             $path = $f->store('img/real-estates');
             $rs_photo = new RealEstatePhotoUrl([
                 'url' => $path,
                 'real_estate_id' => $rsid,
+                'img_number' => $key,
             ]);
             $rs_photo->save();
             Watermarker::addWatermarkAndSave(public_path('storage/') . $path);
