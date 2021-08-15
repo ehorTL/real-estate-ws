@@ -179,58 +179,36 @@
           :menu-props="{ bottom: true, offsetY: true }"
         ></v-select>
 
-        <v-file-input
+        <image-uploader
           v-if="showImageInput"
-          v-model="mainImage"
-          :rules="mainRule"
-          show-size
-          accept="image/png, image/jpeg, image/bmp"
-          prepend-icon="mdi-camera"
-          counter
-          outlined
-          dense
-          required
-          label="Добавить главную фотографию"
-          ref="image"
-          @change="getMainImage"
-          @click:clear="clearMainImage"
-        ></v-file-input>
-
-        <div class="image-wrapper" v-if="!showImageInput">
-          Главное фото:
-          <img class="image" :src="`${imgUrl}/${mainImage}`" />
-        </div>
-
-        <div class="image-wrapper" v-if="mainImageUrl && showImageInput">
-          <img class="image" :src="mainImageUrl" />
-        </div>
-
-        <v-file-input
-          v-if="showImagesInput"
-          v-model="images"
-          :rules="mainRule"
-          show-size
-          accept="image/png, image/jpeg, image/bmp"
-          prepend-icon="mdi-camera"
-          counter
-          outlined
-          dense
-          multiple
-          required
-          @change="getMainImages"
-          label="Добавить фотографии"
-        ></v-file-input>
-
-        <span v-if="!showImagesInput">Другие фото:</span>
-        <div v-if="!showImagesInput" class="images">
-          <div class="image-wrapper" v-for="(image, i) in images" :key="i">
-            <img class="image" :src="`${imgUrl}/${image.url}`" />
+          @getMainImage="getMainImage"
+          @deleteMainImage="clearMainImage"
+          :value="valueImage"
+          :main-image-url="mainImageUrl"
+        />
+        <span v-if="!showImageInput">Главное фото:</span>
+        <div
+          v-if="!showImageInput"
+          class="main-image-wrapper d-flex justify-center elevation-4 ma-2"
+        >
+          <div class="image-wrapper">
+            <img class="image" :src="`${imgUrl}/${mainImage}`" />
           </div>
         </div>
 
-        <div v-if="mainImages && showImagesInput" class="images">
-          <div class="image-wrapper" v-for="(image, i) in mainImages" :key="i">
-            <img class="image" :src="image" />
+        <multiple-image-uploader
+          v-if="showImagesInput"
+          @getMainImages="getMainImages"
+          @deleteImage="clearImage"
+          @changeImages="changeImages"
+          :value="valueImages"
+          :images="mainImages"
+        />
+
+        <span v-if="!showImagesInput">Другие фото:</span>
+        <div v-if="!showImagesInput" class="images elevation-4 ma-2">
+          <div class="image-wrapper" v-for="(image, i) in images" :key="i">
+            <img class="image" :src="`${imgUrl}/${image.url}`" />
           </div>
         </div>
 
@@ -268,8 +246,14 @@
 </template>
 
 <script>
+import MultipleImageUploader from "../MultipleImageUploader";
+import ImageUploader from "../ImageUploader";
 export default {
   name: "EditObject",
+  components: {
+    MultipleImageUploader,
+    ImageUploader
+  },
   metaInfo: {
     title: "Редактирование объекта"
   },
@@ -356,7 +340,9 @@ export default {
     showImagesInput: false,
     imgUrl: null,
     showPreloader: true,
-    dialog: false
+    dialog: false,
+    valueImages: [],
+    valueImage: []
   }),
   watch: {
     "formData.agent": {
@@ -409,7 +395,6 @@ export default {
       this.axios
         .get(`common/real-estate/${objectId}`)
         .then(res => {
-          console.log(res);
           this.formData.title = res.data.title;
           this.formData.description = res.data.description;
           this.formData.objectType = res.data.real_estate_categories.map(
@@ -453,19 +438,37 @@ export default {
       }
     },
     clearMainImage() {
+      this.valueImage = null;
       this.mainImageUrl = null;
     },
     getMainImage(e) {
       if (e) {
-        this.mainImageUrl = URL.createObjectURL(this.mainImage);
+        this.valueImage = e;
+        this.mainImageUrl = URL.createObjectURL(e[0]);
       }
     },
     getMainImages(e) {
       if (e) {
-        this.mainImages = this.images.map(el => {
+        this.valueImages = e;
+        this.mainImages = e.map(el => {
           return URL.createObjectURL(el);
         });
       }
+    },
+    clearImage(index) {
+      this.valueImages.splice(index, 1);
+      this.mainImages.splice(index, 1);
+    },
+    async changeImages(event) {
+      this.valueImages = await this.swap(
+        this.valueImages,
+        event.moved.oldIndex,
+        event.moved.newIndex
+      );
+    },
+    swap(arr, a, b) {
+      arr[a] = arr.splice(b, 1, arr[a])[0];
+      return arr;
     },
     async deleteMainImage() {
       await this.axios
@@ -499,7 +502,6 @@ export default {
     },
     async validate() {
       if (this.$refs.form.validate()) {
-        console.log(this.formData);
         this.dialog = true;
         await this.axios.put(
           `admin/real-estate/${this.$route.params.id}`,
@@ -514,7 +516,7 @@ export default {
             agent: this.formData.agent,
             mobile_number: this.formData.telephone,
             email: this.formData.email,
-            has_commision: 1,
+            has_commision: this.formData.commission,
             real_estate_categories: this.formData.objectType[0].value
               ? this.formData.objectType.map(el => el.value)
               : this.formData.objectType,
@@ -529,12 +531,12 @@ export default {
             }
           }
         );
-        if (this.mainImage && this.mainImage.type) {
+        if (this.valueImage[0] && this.valueImage[0].type) {
           await this.setMainImage();
         }
         if (
-          this.images.length > 0 &&
-          this.images.filter(el => el.id).length <= 0
+          this.valueImages.length > 0 &&
+          this.valueImages.filter(el => el.id).length <= 0
         ) {
           await this.setImages();
         }
@@ -545,7 +547,7 @@ export default {
     async setMainImage() {
       let data = new FormData();
       data.append("real_estate_id", this.$route.params.id);
-      data.append("img", this.mainImage);
+      data.append("img", this.valueImage[0]);
       await this.axios.post("admin/set-rs-main-img", data, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -556,8 +558,8 @@ export default {
     async setImages() {
       let data = new FormData();
       data.append("real_estate_id", this.$route.params.id);
-      for (var i = 0; i < this.images.length; i++) {
-        let image = this.images[i];
+      for (var i = 0; i < this.valueImages.length; i++) {
+        let image = this.valueImages[i];
 
         data.append("images[]", image);
       }
@@ -582,19 +584,33 @@ export default {
     max-width: 100%;
   }
 }
+.main-image-wrapper {
+  border: 1px dashed;
+  border-radius: 4px;
+  padding: 10px;
+  .image-wrapper {
+    margin: 0;
+  }
+}
 .image-wrapper {
   margin-bottom: 20px;
   margin-right: 20px;
-  overflow: hidden;
+  height: 126px;
+  max-width: 100%;
+  width: fit-content;
+  border-radius: 4px;
 }
-
 .image {
   display: block;
-  width: 200px;
-  height: 200px;
+  margin: 0 auto;
+  border-radius: 4px;
+  height: 100%;
   object-fit: contain;
 }
 .images {
+  border: 1px dashed;
+  border-radius: 4px;
+  padding: 10px;
   display: flex;
   flex-wrap: wrap;
 }

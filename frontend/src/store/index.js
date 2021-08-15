@@ -26,7 +26,7 @@ export default new Vuex.Store({
     },
     addToFeatured({ commit, state }, object) {
       if (state.featuredObjects.find(el => el.id === object.id)) {
-        console.log("asdasdasd");
+        return false;
       } else {
         commit("ADD_OBJECT_TO_FEATURED", object);
       }

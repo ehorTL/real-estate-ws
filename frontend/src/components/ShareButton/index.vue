@@ -2,9 +2,9 @@
   <div>
     <v-dialog v-model="dialog" width="400">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn class="mt-3 share-btn" text v-bind="attrs" v-on="on">
+        <v-btn class="mt-3 share-btn" v-bind="attrs" v-on="on">
+          <v-icon class="mr-2">mdi-share-variant-outline</v-icon>
           Поделиться
-          <v-icon class="ml-3">mdi-share-variant-outline</v-icon>
         </v-btn>
       </template>
 
@@ -129,7 +129,9 @@ a {
 }
 .share-btn {
   text-transform: none;
-  font-size: 18px;
-  color: white;
+  font-size: 15px;
+  width: 100%;
+  color: #000000de;
+  justify-content: start;
 }
 </style>

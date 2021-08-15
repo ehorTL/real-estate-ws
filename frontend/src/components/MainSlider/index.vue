@@ -47,7 +47,7 @@ export default {
           prevEl: ".button-prev"
         },
         autoplay: {
-          delay: 10000,
+          delay: 5000,
           disableOnInteraction: true
         },
         breakpoints: {
@@ -115,6 +115,7 @@ export default {
     opacity: 0.4;
     img {
       height: 100%;
+      min-height: 120px;
       max-width: 160px;
       width: 100%;
       border-radius: 20px;

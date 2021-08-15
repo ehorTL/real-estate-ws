@@ -61,6 +61,9 @@ export default {
       }
     ]
   }),
+  mounted() {
+    window.addEventListener("beforeunload", () => this.logout());
+  },
   methods: {
     logout() {
       this.$store.dispatch("logout");

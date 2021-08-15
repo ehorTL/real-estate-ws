@@ -11,8 +11,8 @@
         indeterminate
       />
     </div>
-    <div v-else class="list-wrapper">
-      <div class="list">
+    <div v-else class="list-wrapper" :class="{ 'empty-list': objects.length <= 0 }">
+      <div v-if="objects && objects.length > 0" class="list">
         <ObjectCard
           v-for="(object, index) in objects"
           :key="index"
@@ -20,6 +20,7 @@
           class="item"
         />
       </div>
+      <p v-if="objects.length <= 0">Объектов в данной категории пока нету!</p>
     </div>
     <Footer />
   </div>

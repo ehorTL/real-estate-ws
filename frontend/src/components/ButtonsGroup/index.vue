@@ -7,11 +7,9 @@
       first-link="/ofisy/arenda-ofisov"
       second-link="/ofisy/prodazha-ofisov"
     />
-    <Button
-      title="Доходная недвижимость"
-      second-link-title="Продажа"
-      second-link="/dokhodnaya-nedvizhimost"
-    />
+    <v-btn height="50" class="main-button mb-3" to="/dokhodnaya-nedvizhimost">
+      Доходная недвижимость
+    </v-btn>
     <Button
       title="Магазины"
       first-link-title="Аренда"
@@ -44,3 +42,12 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.main-button {
+  font-size: 14px;
+  text-transform: none;
+  border-radius: 30px;
+  color: #1e2d3b !important;
+}
+</style>

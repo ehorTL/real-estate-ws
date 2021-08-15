@@ -41,7 +41,16 @@
                   <p v-if="!object.realized">
                     <b class="mr-4">E-mail:</b>{{ object.email }}
                   </p>
-                  <ShareButton v-if="!object.realized" :object="object" />
+                  <div v-if="!object.realized" class="buttons-group">
+                    <v-btn
+                      class="featured-btn mt-5"
+                      @click.stop="addToFavorite"
+                    >
+                      <v-icon class="star mr-2">mdi-star</v-icon>
+                      Добавить в избранное
+                    </v-btn>
+                    <ShareButton :object="object" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -101,7 +110,7 @@ export default {
     objectImages() {
       if (this.object && this.object.images && this.object.images.length > 0) {
         const images = this.object.images.map(el => el.url);
-        images.push(this.object.main_image_url);
+        images.unshift(this.object.main_image_url);
 
         return images;
       } else {
@@ -110,6 +119,9 @@ export default {
 
         return image;
       }
+    },
+    addToFavorite() {
+      this.$store.dispatch("addToFeatured", this.object);
     }
   }
 };
@@ -147,5 +159,9 @@ export default {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+.featured-btn {
+  text-transform: none;
+  font-size: 15px;
 }
 </style>

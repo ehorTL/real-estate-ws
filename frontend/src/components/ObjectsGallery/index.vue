@@ -6,7 +6,7 @@
       ref="swiperTop"
     >
       <swiper-slide v-for="(slide, index) in slides" :key="index">
-        <div class="swiper-zoom-container" @click="openCarousel(index)">
+        <div class="image" @click="openCarousel(index)">
           <img :src="`${imgUrl}/${slide}`" />
         </div>
       </swiper-slide>
@@ -21,7 +21,7 @@
       </swiper-slide>
     </swiper>
 
-    <v-dialog v-model="isCarouselOpened" width="800">
+    <v-dialog class="elevation-0" v-model="isCarouselOpened" width="800">
       <v-carousel
         v-model="carousel"
         cycle
@@ -65,7 +65,7 @@ export default {
         touchRatio: 0.2,
         slideToClickedSlide: true,
         autoplay: {
-          delay: 10000,
+          delay: 5000,
           disableOnInteraction: true
         }
       },
@@ -107,17 +107,33 @@ export default {
   object-fit: contain;
 }
 
+::v-deep .v-dialog {
+  box-shadow: none !important;
+}
+
+::v-deep .v-carousel__controls {
+  bottom: 30px !important;
+}
+
 .swiper {
   .swiper-slide {
     height: 270px;
+    max-width: 100%;
+    width: fit-content;
+  }
+
+  .image {
+    display: block;
+    height: 100%;
+    object-fit: contain;
   }
 
   img {
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
     width: 100%;
-    border-radius: 20px;
+    height: 100%;
+    max-width: 100%;
+    object-position: center;
+    border-radius: 15px;
     cursor: pointer;
   }
 

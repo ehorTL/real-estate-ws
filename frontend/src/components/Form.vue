@@ -159,48 +159,25 @@
           :menu-props="{ bottom: true, offsetY: true }"
         ></v-select>
 
-        <v-file-input
-          :rules="mainRule"
-          show-size
-          accept="image/png, image/jpeg, image/bmp"
-          prepend-icon="mdi-camera"
-          counter
-          outlined
-          dense
-          label="Добавить главную фотографию"
-          ref="image"
-          @change="getMainImage"
-          @click:clear="deleteMainImage"
-          v-model="mainImage"
-        ></v-file-input>
+        <image-uploader
+          @getMainImage="getMainImage"
+          @deleteMainImage="deleteMainImage"
+          :value="valueImage"
+          :main-image-url="mainImageUrl"
+        />
 
-        <div class="image-wrapper" v-if="mainImageUrl">
-          <img class="image" :src="mainImageUrl" />
-        </div>
-
-        <v-file-input
-          v-model="images"
-          show-size
-          accept="image/png, image/jpeg, image/bmp"
-          prepend-icon="mdi-camera"
-          counter
-          outlined
-          dense
-          multiple
-          @change="getMainImages"
-          label="Добавить фотографии"
-        ></v-file-input>
-
-        <div v-if="mainImages" class="images">
-          <div class="image-wrapper" v-for="(image, i) in mainImages" :key="i">
-            <img class="image" :src="image" />
-          </div>
-        </div>
+        <multiple-image-uploader
+          @getMainImages="getMainImages"
+          @deleteImage="deleteImage"
+          @changeImages="changeImages"
+          :value="valueImages"
+          :images="mainImages"
+        />
 
         <v-btn
           :disabled="!valid"
           color="success"
-          class="mr-4"
+          class="mr-4 mt-4"
           @click="validate"
         >
           Добавить
@@ -211,82 +188,92 @@
 </template>
 
 <script>
+import MultipleImageUploader from "./MultipleImageUploader";
+import ImageUploader from "./ImageUploader";
 export default {
-  data: () => ({
-    valid: true,
-    mainRule: [v => !!v || "Заполните поле"],
-    emailRules: [
-      v => !!v || "E-mail is required",
-      v => /.+@.+\..+/.test(v) || "E-mail must be valid"
-    ],
-    objectTypes: [],
-    objectTypeRules: [
-      v => !!v || "Заполните поле",
-      v => v.length <= 3 || "Максимальное количество объектов - три"
-    ],
-    dealItems: [
-      { type: "Продажа", value: 1 },
-      { type: "Аренда", value: 2 }
-    ],
-    commissionItems: [
-      { type: "Без комисси!", value: "false" },
-      { type: "С комиссией!", value: "true" }
-    ],
-    currencyItems: [
-      { type: "USD", value: 1 },
-      { type: "ГРН", value: 2 }
-    ],
-    realizedItems: [
-      { type: "Нет", value: "false" },
-      { type: "Да", value: "true" }
-    ],
-    sliderItems: [
-      { type: "Нет", value: "false" },
-      { type: "Да", value: "true" }
-    ],
-    agentsItems: [
-      {
-        type: "Кирилюк Александр",
-        value: "Кирилюк Александр"
+  components: {
+    MultipleImageUploader,
+    ImageUploader
+  },
+  data() {
+    return {
+      valid: true,
+      mainRule: [v => !!v || "Заполните поле"],
+      emailRules: [
+        v => !!v || "E-mail is required",
+        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+      ],
+      objectTypes: [],
+      objectTypeRules: [
+        v => !!v || "Заполните поле",
+        v => v.length <= 3 || "Максимальное количество объектов - три"
+      ],
+      dealItems: [
+        { type: "Продажа", value: 1 },
+        { type: "Аренда", value: 2 }
+      ],
+      commissionItems: [
+        { type: "Без комисси!", value: "false" },
+        { type: "С комиссией!", value: "true" }
+      ],
+      currencyItems: [
+        { type: "USD", value: 1 },
+        { type: "ГРН", value: 2 }
+      ],
+      realizedItems: [
+        { type: "Нет", value: "false" },
+        { type: "Да", value: "true" }
+      ],
+      sliderItems: [
+        { type: "Нет", value: "false" },
+        { type: "Да", value: "true" }
+      ],
+      agentsItems: [
+        {
+          type: "Кирилюк Александр",
+          value: "Кирилюк Александр"
+        },
+        {
+          type: "Фильченков Дмитрий",
+          value: "Фильченков Дмитрий"
+        },
+        {
+          type: "Неилко Галина",
+          value: "Неилко Галина"
+        },
+        {
+          type: "Геннадий Кушманцев",
+          value: "Геннадий Кушманцев"
+        },
+        {
+          type: "Москаленко Александр",
+          value: "Москаленко Александр"
+        }
+      ],
+      formData: {
+        title: "",
+        description: "",
+        objectType: [],
+        address: "",
+        area: "",
+        currency: "",
+        price: "",
+        deal: null,
+        commission: null,
+        agent: "",
+        telephone: "",
+        email: "",
+        isRealized: false,
+        isSlider: false
       },
-      {
-        type: "Фильченков Дмитрий",
-        value: "Фильченков Дмитрий"
-      },
-      {
-        type: "Неилко Галина",
-        value: "Неилко Галина"
-      },
-      {
-        type: "Геннадий Кушманцев",
-        value: "Геннадий Кушманцев"
-      },
-      {
-        type: "Москаленко Александр",
-        value: "Москаленко Александр"
-      }
-    ],
-    formData: {
-      title: "",
-      description: "",
-      objectType: [],
-      address: "",
-      area: "",
-      currency: "",
-      price: "",
-      deal: null,
-      commission: null,
-      agent: "",
-      telephone: "",
-      email: "",
-      isRealized: false,
-      isSlider: false
-    },
-    mainImage: null,
-    images: null,
-    mainImageUrl: null,
-    mainImages: null
-  }),
+      mainImage: null,
+      images: null,
+      mainImageUrl: null,
+      mainImages: null,
+      valueImages: [],
+      valueImage: []
+    };
+  },
   watch: {
     "formData.agent": {
       handler(val) {
@@ -330,17 +317,35 @@ export default {
     },
     getMainImage(e) {
       if (e) {
-        this.mainImageUrl = URL.createObjectURL(this.mainImage);
+        this.valueImage = e;
+        this.mainImageUrl = URL.createObjectURL(e[0]);
       }
     },
     getMainImages(e) {
       if (e) {
-        this.mainImages = this.images.map(el => {
+        this.valueImages = e;
+        this.mainImages = e.map(el => {
           return URL.createObjectURL(el);
         });
       }
     },
+    async changeImages(event) {
+      this.valueImages = await this.swap(
+        this.valueImages,
+        event.moved.oldIndex,
+        event.moved.newIndex
+      );
+    },
+    swap(arr, a, b) {
+      arr[a] = arr.splice(b, 1, arr[a])[0];
+      return arr;
+    },
+    deleteImage(index) {
+      this.valueImages.splice(index, 1);
+      this.mainImages.splice(index, 1);
+    },
     deleteMainImage() {
+      this.valueImage = [];
       this.mainImageUrl = null;
     },
     validate() {
@@ -349,8 +354,8 @@ export default {
           "click",
           this.formData,
           this.pricePerMeter,
-          this.mainImage,
-          this.images
+          this.valueImage[0],
+          this.valueImages
         );
       }
     }
@@ -367,22 +372,5 @@ export default {
   .form {
     max-width: 100%;
   }
-}
-.image-wrapper {
-  width: 200px;
-  height: 200px;
-  margin-bottom: 20px;
-  margin-right: 20px;
-  overflow: hidden;
-}
-.image {
-  display: block;
-  width: 200px;
-  height: 200px;
-  object-fit: contain;
-}
-.images {
-  display: flex;
-  flex-wrap: wrap;
 }
 </style>
