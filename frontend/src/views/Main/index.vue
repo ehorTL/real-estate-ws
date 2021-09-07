@@ -45,7 +45,7 @@ export default {
   methods: {
     getRealizedObjects() {
       this.axios
-        .get("common/real-estate-featured?realized=true&arc=false")
+        .get("common/real-estate-featured?per_page=6&realized=true&arc=false")
         .then(res => {
           this.realizedObjects = res.data.data;
           this.showRealizedPreloader = false;

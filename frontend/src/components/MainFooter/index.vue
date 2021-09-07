@@ -79,7 +79,7 @@
       </div>
       <div class="underline" />
       <div class="company">
-        <p>Компания комерческой недвижимости АКМ © 2021</p>
+        <p>Компания коммерческой недвижимости АКМ © 2021</p>
       </div>
     </div>
   </footer>
@@ -125,7 +125,7 @@ export default {
           to: "/sale-builds"
         },
         {
-          title: "Доходная недвижемость",
+          title: "Доходная недвижимость",
           to: "/dokhodnaya-nedvizhimost"
         }
       ]

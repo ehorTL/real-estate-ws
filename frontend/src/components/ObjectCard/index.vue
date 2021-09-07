@@ -115,6 +115,7 @@ export default {
   padding: 5px;
   color: #1e2d3b;
   max-height: 45px;
+  min-height: 45px;
 }
 .object-footer {
   background-color: #1e2d3b;

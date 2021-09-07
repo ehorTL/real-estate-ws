@@ -24,7 +24,8 @@ export default {
   data() {
     return {
       objects: [],
-      showPreloader: true
+      showPreloader: true,
+      itemsPerPage: 9999
     };
   },
   created() {
@@ -33,7 +34,9 @@ export default {
   methods: {
     getObjects() {
       this.axios
-        .get("common/real-estate-featured?rec_ids[]=3&ct=1&realized=false")
+        .get(
+          `common/real-estate-featured?per_page=${this.itemsPerPage}&rec_ids[]=3&ct=1&realized=false`
+        )
         .then(res => {
           this.objects = res.data.data;
           this.showPreloader = false;
