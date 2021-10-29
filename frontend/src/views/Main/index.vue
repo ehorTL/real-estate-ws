@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper-main">
     <Header />
-    <MainSection :show-slider="true" title="Комерческая недвижимость" />
+    <MainSection :show-slider="true" title="Коммерческая недвижимость" />
     <MainActualObjects
       :objects="actualObjects"
       :show-preloader="showActualPreloader"

@@ -20,7 +20,7 @@
           class="item"
         />
       </div>
-      <p v-if="objects.length <= 0">Объектов в данной категории пока нету!</p>
+      <p v-if="objects.length <= 0">Объектов в данной категории пока нет!</p>
     </div>
     <Footer />
   </div>
